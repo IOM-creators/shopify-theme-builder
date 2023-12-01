@@ -1,0 +1,47 @@
+<footer id="footer" data-section="footer">
+  <script type="application/json" data-section-data>
+    {
+        "menu": [
+            {% for link in linklists[section.settings.menu].links %}
+              {
+                "id": {{ link.title | handle | json }},
+                "title": {{ link.title | json }},
+                "url": "{{ link.url }}",
+                "links": [
+                  {% for child_link in link.links %}
+                    {
+                      "id": {{ child_link.title | handle | json }},
+                      "title": {{ child_link.title | json }},
+                      "url": "{{ child_link.url }}",
+                      "links": [
+                        {% for grandchild_link in child_link.links %}
+                          {
+                            "handle": {{ grandchild_link.title | handle | json }},
+                            "id": {{ grandchild_link.title | handle | json }},
+                            "title": {{ grandchild_link.title | json }},
+                            "url": "{{ grandchild_link.url }}"
+                          }{% unless forloop.last %},{% endunless %}
+                        {% endfor %}
+                      ]
+                    }{% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                 ]
+              }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+          ]
+    }
+  </script>
+</footer>
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "menu",
+        "label": "Menu",
+        "default": "main-menu"
+      }
+    ]
+  }
+{% endschema %}
