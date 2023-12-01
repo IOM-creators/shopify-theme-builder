@@ -19,12 +19,15 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env"],
+            presets: [
+              ["@babel/preset-env", { modules: false }],
+              "@babel/preset-react",
+            ],
           },
         },
       },
@@ -78,4 +81,10 @@ module.exports = {
       ],
     }),
   ],
+  resolve: {
+    alias: {
+      react: "preact-compat",
+      "react-dom": "preact-compat",
+    },
+  },
 };

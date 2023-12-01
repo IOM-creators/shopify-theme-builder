@@ -1,12 +1,10 @@
 import { h } from "preact";
-const Navigation = ({ menu }) => {
+export const Navigation = ({ menu }) => {
   return (
-    <div class="havigation">
+    <div class="navigation">
       {menu.map((item) => (
         <li>{item.title}</li>
       ))}
     </div>
   );
 };
-
-export default Navigation;

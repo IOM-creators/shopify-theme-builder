@@ -44,15 +44,12 @@
 
     {% section 'header' %}
 
-      <main
+    <main
       id="MainContent"
       class="content-for-layout focus-none"
       role="main"
       tabindex="-1">
-        {% comment %}
-          {{ content_for_layout }}
-        {% endcomment %}
-      Main
+      {{ content_for_layout }}
     </main>
     {% section 'footer' %}
     {{ 'main.js' | asset_url | script_tag }}

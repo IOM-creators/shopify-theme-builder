@@ -1,5 +1,5 @@
 import { h } from "preact";
-const Navigation = ({ menu }) => {
+export const Navigation = ({ menu }) => {
   return (
     <div class="havigation">
       {menu.map((item) => (
@@ -8,5 +8,3 @@ const Navigation = ({ menu }) => {
     </div>
   );
 };
-
-export default Navigation;

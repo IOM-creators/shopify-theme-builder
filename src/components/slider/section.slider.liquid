@@ -1,0 +1,24 @@
+<div id="slider" data-section="slider">
+  <script type="application/json" data-section-data>
+    {
+        "products": {{section.settings.collection.products | json}}
+    }
+  </script>
+</div>
+{% schema %}
+  {
+    "name": "Slider",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Slider"
+      }
+    ]
+  }
+{% endschema %}

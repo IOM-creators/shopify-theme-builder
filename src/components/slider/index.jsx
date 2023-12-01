@@ -1,11 +1,12 @@
 import { h, render } from "preact";
-import Havigation from "./Navigation";
+import { Slider } from "./Slider.jsx";
+
 import "./styles.scss";
 
 export default (element, data) => {
   console.log(element, data);
   const init = () => {
-    render(<Havigation menu={data.menu} />, element);
+    render(<Slider menu={data.products} />, element);
   };
   init();
 };
