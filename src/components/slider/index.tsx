@@ -1,12 +1,11 @@
 import { h, render } from "preact";
-import { Slider } from "./Slider.jsx";
+import { Slider } from "./Slider";
 
 import "./styles.scss";
 
 export default (element, data) => {
-  console.log(element, data);
   const init = () => {
-    render(<Slider menu={data.products} />, element);
+    render(<Slider slides={data.products} />, element);
   };
   init();
 };

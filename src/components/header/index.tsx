@@ -1,13 +1,12 @@
 import { h, render } from "preact";
-import { Navigation } from "./Navigation.jsx";
+import { Navigation } from "./Navigation";
 import "./styles.scss";
 
-const footer = (element, data) => {
-  console.log(element, data);
+const header = (element, data) => {
   const init = () => {
     render(<Navigation menu={data.menu} />, element);
   };
   init();
 };
 
-export default footer;
+export default header;

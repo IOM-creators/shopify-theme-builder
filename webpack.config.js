@@ -13,13 +13,13 @@ module.exports = {
     path: path.resolve(__dirname, "assets"),
     chunkFilename: (pathData) =>
       pathData.chunk.name
-        ? `${pathData.chunk.name.replace("-index-js", "")}.js`
+        ? `${pathData.chunk.name.replace("-index-tsx", "")}.js`
         : "[name].js",
   },
   module: {
     rules: [
       {
-        test: /\.jsx$/,
+        test: /\.tsx$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
@@ -41,7 +41,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       chunkFilename: (pathData) => {
         return pathData.chunk.name
-          ? `${pathData.chunk.name.replace("-index-js", "")}.css`
+          ? `${pathData.chunk.name.replace("-index-tsx", "")}.css`
           : "[name].css";
       },
     }),
@@ -82,6 +82,7 @@ module.exports = {
     }),
   ],
   resolve: {
+    extensions: [".tsx", ".ts", ".jsx", ".js"],
     alias: {
       react: "preact-compat",
       "react-dom": "preact-compat",

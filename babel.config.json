@@ -1,6 +1,7 @@
 {
   "presets": [
     ["@babel/preset-env", { "modules": false }],
+    ["@babel/typescript", { "jsxPragma": "h" }],
     "@babel/preset-react"
   ],
   "plugins": [["@babel/plugin-transform-react-jsx", { "pragma": "h" }]]

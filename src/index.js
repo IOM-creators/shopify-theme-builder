@@ -9,7 +9,7 @@ import "./index.scss";
     .filter(uniq);
 
   sectionNames.forEach((name) => {
-    import(/* webpackChunkName: "[request]" */ `./components/${name}/index.jsx`)
+    import(/* webpackChunkName: "[request]" */ `./components/${name}/index.tsx`)
       .then((m) => {
         const module = m.default;
         const modules = [...sections].filter(
