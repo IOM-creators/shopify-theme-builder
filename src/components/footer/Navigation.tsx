@@ -4,7 +4,7 @@ type NavigationProps = {
 };
 export const Navigation = ({ menu }: NavigationProps) => {
   return (
-    <div class="havigation">
+    <div class="navigation">
       {menu && menu.map((item: any) => <li>{item.title}</li>)}
     </div>
   );
