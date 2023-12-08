@@ -1,7 +1,7 @@
 import { h, render } from "preact";
 import { CartItems } from "./CartItems";
 
-export default function cart(element, data) {
+export default (element, data) => {
   const init = () => {
     render(
       <div className="cart-wrapper">
@@ -11,4 +11,4 @@ export default function cart(element, data) {
     );
   };
   init();
-}
+};
