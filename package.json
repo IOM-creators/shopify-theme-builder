@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "shopify theme dev",
+    "deploy": "run-s build && cross-var shopify theme push --store=test-store-iom",
+    "deploy:new": "run-s build && cross-var shopify theme push --store=test-store-iom -n -u",
     "dev": "rm -rf sections snippets && cross-env NODE_ENV=development webpack --config webpack.config.js",
     "build": "rm -rf sections snippets && cross-env NODE_ENV=production webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,16 +18,18 @@
     "@babel/plugin-transform-runtime": "^7.23.4",
     "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^7.0.3",
+    "cross-var": "^1.1.0",
     "css-loader": "^6.8.1",
     "mini-css-extract-plugin": "^2.7.6",
     "node-sass": "^9.0.0",
     "postcss-loader": "^7.3.3",
+    "preact": "^10.19.2",
     "sass-loader": "^13.3.2",
     "scss-loader": "^0.0.1",
     "style-loader": "^3.3.3",
     "swiper": "^11.0.5",
-    "vendor": "^1.7.0",
-    "preact": "^10.11.0"
+    "terser-webpack-plugin": "^5.3.9",
+    "vendor": "^1.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.5",
@@ -36,6 +40,8 @@
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "babel-loader": "^9.1.3",
+    "clean-webpack-plugin": "^4.0.0",
+    "npm-run-all": "^4.1.5",
     "typescript": "^5.3.2",
     "webpack": "^5.89.0",
     "webpack-cli": "^4.10.0"

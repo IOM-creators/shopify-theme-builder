@@ -6,5 +6,26 @@
     "theme_author": "Shopify",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://support.shopify.com/"
+  },
+  {
+    "name": "Storefront",
+    "settings": [
+      {
+        "type": "text",
+        "id": "storefront_api_version",
+        "label": "API verision",
+        "default": "2023-10"
+      },
+      {
+        "type": "text",
+        "id": "storefront_token",
+        "label": "Storefront API tocken"
+      },
+      {
+        "type": "text",
+        "id": "admin_token",
+        "label": "Admin API tocken"
+      }
+    ]
   }
 ]

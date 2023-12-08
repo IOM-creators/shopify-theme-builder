@@ -5,8 +5,18 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   mode: process.env.NODE_ENV,
   watch: process.env.NODE_ENV === "development",
+
   entry: {
-    main: path.resolve(__dirname, "src/index.js"),
+    main: {
+      import: "./src/index.js",
+      dependOn: "vendor",
+    },
+    vendor: ["preact", "swiper"],
+  },
+  devtool:
+    process.env.NODE_ENV === "development" ? "eval-source-map" : "source-map",
+  cache: {
+    type: "filesystem",
   },
   output: {
     clean: true,
@@ -49,7 +59,7 @@ module.exports = {
       patterns: [
         {
           from: path
-            .resolve(__dirname, "src/components/**/snippet.*.liquid")
+            .resolve(__dirname, "src/**/snippet.*.liquid")
             .replaceAll("\\", "/"),
           to({ absoluteFilename }) {
             const p = `snippets/${
@@ -60,7 +70,7 @@ module.exports = {
         },
         {
           from: path
-            .resolve(__dirname, "src/components/**/section.*.liquid")
+            .resolve(__dirname, "src/**/section.*.liquid")
             .replaceAll("\\", "/"),
           to({ absoluteFilename }) {
             const p = `sections/${

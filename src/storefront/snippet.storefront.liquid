@@ -1,0 +1,14 @@
+<div>
+  <script data-storefront type='application/json'>
+    {
+      "apiVersion": {{ settings.storefront_api_version | json }},
+      "storefrontToken": {{ settings.storefront_token | json }},
+      "adminToken": {{ settings.admin_token | json }},
+      "shopName": {{ shop.permanent_domain | json }},
+      "localization": {
+        "countryCode": {{ localization.country.iso_code | json }},
+        "currencyCode": {{ localization.country.currency.iso_code | json }}
+      }
+    }
+  </script>
+</div>

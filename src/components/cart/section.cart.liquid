@@ -1,0 +1,22 @@
+<section id="cart" data-section="cart">
+  Cart
+  <script type="application/json" data-section-data>
+    {
+       "cart": {{cart | json}},
+       "title": "{{section.settings.title}}"
+    }
+  </script>
+</section>
+{% schema %}
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Title"
+      }
+    ]
+  }
+{% endschema %}

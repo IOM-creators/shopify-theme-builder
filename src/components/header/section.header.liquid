@@ -1,6 +1,8 @@
 <header id="header" data-section="header">
   <script type="application/json" data-section-data>
-    {
+    {   
+        "customerId": "{{customer.id}}",
+        "customerTags": {{customer.tags | json}},
         "menu": [
             {% for link in linklists[section.settings.menu].links %}
               {

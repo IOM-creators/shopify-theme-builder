@@ -1,6 +1,27 @@
 {
-  "current": "Default",
+  "current": {
+    "storefront_token": "c015625fd872d2b2d3f399243a279f37",
+    "admin_token": "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",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "menu": "main-menu"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "menu": "main-menu"
+        }
+      }
+    },
+    "content_for_index": [
+
+    ]
+  },
   "presets": {
-    "Default": {}
+    "Default": {
+    }
   }
 }
