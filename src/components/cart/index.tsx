@@ -1,14 +1,10 @@
 import { h, render } from "preact";
 import { CartItems } from "./CartItems";
+import "./styles.scss";
 
 export default (element, data) => {
   const init = () => {
-    render(
-      <div className="cart-wrapper">
-        <CartItems />
-      </div>,
-      element
-    );
+    render(<CartItems />, element);
   };
   init();
 };

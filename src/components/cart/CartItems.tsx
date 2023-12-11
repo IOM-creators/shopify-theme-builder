@@ -1,13 +1,13 @@
-import { h, render } from "preact";
+import { h } from "preact";
 import { getCart } from "../../storefront/graphql/send-request";
 import { getData } from "../../helpers/get-data";
 import { CartItem } from "./CartItem";
 
 export const CartItems = () => {
-  const cart = getData(getCart());
-  const cartItems = cart?.lines || [cart];
-  console.log("cart", cart);
-
+  const data = getData(getCart());
+  const cartItems = data?.cart
+    ? data.cart?.lines?.nodes?.map((node) => node?.merchandise)
+    : [];
   return (
     <div className="cart-wrapper">
       <div className="cart-items">

@@ -8,6 +8,10 @@ export const productVariant = `
     image{
         url
     }
+    product {
+        title
+        handle
+    }
 `;
 
 export const customer = `

@@ -7,9 +7,7 @@ export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
   return (
     <div class="navigation">
       {menu.map((item: any) => (
-        <li>
-          {item.title} - {item.url}
-        </li>
+        <li>{item.title}</li>
       ))}
     </div>
   );
