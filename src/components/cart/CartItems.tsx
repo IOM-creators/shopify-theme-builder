@@ -10,7 +10,7 @@ export const CartItems = () => {
     : [];
   return (
     <div className="cart-wrapper">
-      <div className="cart-items">
+      <div className="cart-items grid grid-cols-4 gap-4">
         {cartItems.map((item: any) => (
           <CartItem item={item} />
         ))}
