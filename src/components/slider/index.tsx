@@ -1,5 +1,6 @@
 import { h, render } from "preact";
 import { Slider } from "./Slider";
+import { Slide } from "./Slide";
 import "./styles.scss";
 
 export default (element, data) => {
@@ -14,7 +15,7 @@ export default (element, data) => {
       <Slider params={sliderParams}>
         {data.products &&
           data.products.map((slide: any) => (
-            <div className="swiper-slide">
+            <Slide>
               <div className="img-wrapper">
                 <img
                   src={slide.featured_image}
@@ -24,7 +25,7 @@ export default (element, data) => {
                 />
               </div>
               <h5>{slide.title}</h5>
-            </div>
+            </Slide>
           ))}
       </Slider>,
       element
