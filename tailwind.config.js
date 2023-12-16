@@ -45,6 +45,7 @@ module.exports = {
       },
       backgroundColor: {
         black: "#000",
+        "black-05": "rgba(0,0,0,.5)",
         silver: "#C4C4C4",
         white: "#fff",
         green: "#65e4a3",

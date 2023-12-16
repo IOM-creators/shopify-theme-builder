@@ -18,15 +18,6 @@
     "types": ["preact"],
     "skipLibCheck": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/index.js",
-    "src/components/footer/index.tss",
-    "src/components/footer/index.tss",
-    "src/components/footer/index.jsx",
-    "src/components/header/index.jsx",
-    "src/components/slider/index.jsx"
-  ],
+  "include": ["src", "sitemap.js"],
   "exclude": ["node_modules"]
 }

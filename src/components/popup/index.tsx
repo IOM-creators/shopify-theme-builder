@@ -1,10 +1,11 @@
 import { h, render } from "preact";
-import { CartItems } from "./CartItems";
+import { Popup } from "./Popup";
+
 import "./styles.scss";
 
 export default (element, data) => {
   const init = () => {
-    render(<CartItems />, element);
+    render(<Popup />, element);
   };
   init();
 };

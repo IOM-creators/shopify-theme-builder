@@ -10,26 +10,18 @@ export default (element, data) => {
     loop: true,
     slidesPerView: 3,
   };
-  const init = () => {
-    render(
-      <Slider params={sliderParams}>
-        {data.products &&
-          data.products.map((slide: any) => (
-            <Slide>
-              <div className="img-wrapper">
-                <img
-                  src={slide.featured_image}
-                  alt=""
-                  width={200}
-                  height={200}
-                />
-              </div>
-              <h5>{slide.title}</h5>
-            </Slide>
-          ))}
-      </Slider>,
-      element
-    );
-  };
-  init();
+  render(
+    <Slider params={sliderParams}>
+      {data.products &&
+        data.products.map((slide: any) => (
+          <Slide>
+            <div className="img-wrapper">
+              <img src={slide.featured_image} alt="" width={200} height={200} />
+            </div>
+            <h5>{slide.title}</h5>
+          </Slide>
+        ))}
+    </Slider>,
+    element
+  );
 };

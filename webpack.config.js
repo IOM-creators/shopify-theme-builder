@@ -7,8 +7,8 @@ module.exports = {
   watch: process.env.NODE_ENV === "development",
 
   entry: {
-    main: {
-      import: "./src/index.js",
+    global: {
+      import: "./src/index.tsx",
       dependOn: "vendor",
     },
     vendor: ["preact", "swiper"],
@@ -29,7 +29,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
@@ -58,6 +58,17 @@ module.exports = {
           },
           {
             loader: "sass-loader",
+          },
+        ],
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+            },
           },
         ],
       },

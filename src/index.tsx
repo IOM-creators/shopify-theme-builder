@@ -2,7 +2,7 @@ import "./index.scss";
 
 (() => {
   const uniq = (value, index, self) => self.indexOf(value) === index;
-  const sections = document.querySelectorAll("[data-section]");
+  const sections: any = document.querySelectorAll("[data-section]");
   const sectionNames = [...sections]
     .map((section) => section.dataset.section)
     .filter(uniq);

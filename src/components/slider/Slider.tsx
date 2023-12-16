@@ -1,4 +1,4 @@
-import { h, ComponentChildren } from "preact";
+import { h, ComponentChildren, FunctionalComponent } from "preact";
 import { useEffect, useRef } from "preact/hooks";
 import Swiper from "swiper";
 
@@ -19,11 +19,11 @@ const useSwiper = (props = {}) => {
   return swiperContainer;
 };
 
-type SliderProps = {
+interface ISlider {
   params?: any;
   children?: ComponentChildren;
-};
-export const Slider = ({ params, children }: SliderProps) => {
+}
+export const Slider: FunctionalComponent<ISlider> = ({ params, children }) => {
   const swiperContainer = useSwiper(params);
   return (
     <div>

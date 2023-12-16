@@ -1,0 +1,27 @@
+<section id="popup" data-section="popup">
+  <script type="application/json" data-section-data>
+    {   
+        "width": {{section.settings.width}},
+        "height": {{section.settings.height}}
+    }
+  </script>
+</section>
+
+{% schema %}
+  {
+    "name": "Popup",
+    "settings": [
+      {
+        "type": "number",
+        "id": "width",
+        "label": "Width %",
+        "default": 60
+      }, {
+        "type": "number",
+        "id": "height",
+        "label": "height %",
+        "default": 60
+      }
+    ]
+  }
+{% endschema %}
