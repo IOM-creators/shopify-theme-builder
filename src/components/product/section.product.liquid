@@ -1,0 +1,21 @@
+<section id="product" data-section="product">
+  <script type="application/json" data-section-data>
+    {   
+        "text": "{{section.settings.text}}"
+    }
+  </script>
+</section>
+
+{% schema %}
+  {
+    "name": "Product",
+    "settings": [
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text",
+        "default": "Text"
+      }
+    ]
+  }
+{% endschema %}

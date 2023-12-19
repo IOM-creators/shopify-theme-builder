@@ -21,6 +21,20 @@ export const getCart = async () => {
   }
 };
 
+export const getCollection = async (handle) => {
+  try {
+    const response = await storefront.request({
+      query: queries.getCollection,
+      variables: {
+        handle,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("error", error);
+  }
+};
+
 export const updateCustomerTags = async (customerId) => {
   try {
     const response = await storefront.request({

@@ -43,3 +43,30 @@ export const getCart = `
     }
   }
 `;
+
+export const getCollection = `
+  query getCollection($handle: String!) {
+      collection(handle: $handle) {
+        products(first: 10) {
+          nodes {
+              id
+              title
+              description
+              featuredImage {
+                src
+              }
+              priceRange {
+                maxVariantPrice {
+                  amount
+                  currencyCode
+                }
+                minVariantPrice {
+                  amount
+                  currencyCode
+                }
+              }
+          }
+        }
+      }
+  }
+`;

@@ -1,0 +1,22 @@
+<section id="collection" data-section="collection">
+  <script type="application/json" data-section-data>
+    {   
+      "handle": "{{collection.handle}}",
+      "text": "{{section.settings.text}}"
+    }
+  </script>
+</section>
+
+{% schema %}
+  {
+    "name": "Collection",
+    "settings": [
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Text",
+        "default": "Text"
+      }
+    ]
+  }
+{% endschema %}

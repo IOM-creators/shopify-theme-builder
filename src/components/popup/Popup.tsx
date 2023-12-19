@@ -54,7 +54,7 @@ export const Popup: FunctionalComponent<IPopup> = ({ className, params }) => {
             <Icon icon="close" />
           </button>
         </div>
-        <div className="popup-conteiner">{popupState.content}</div>
+        <div className="popup-conteiner px-6 py-10">{popupState.content}</div>
       </div>
     </div>
   );

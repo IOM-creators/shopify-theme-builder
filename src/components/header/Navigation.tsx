@@ -7,8 +7,8 @@ export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
   const openPopup = (title) => {
     setPopupState({
       state: true,
-      content: <div>{title}</div>,
-      title: "Title",
+      content: <div>Popup content</div>,
+      title,
     });
   };
   return (
