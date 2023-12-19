@@ -51,6 +51,7 @@ export const getCollection = `
           nodes {
               id
               title
+              handle
               description
               featuredImage {
                 src
@@ -63,6 +64,16 @@ export const getCollection = `
                 minVariantPrice {
                   amount
                   currencyCode
+                }
+              }
+              variants(first: 1) {
+                nodes {
+                  compareAtPrice {
+                    amount
+                  }
+                  price {
+                    amount
+                  }
                 }
               }
           }

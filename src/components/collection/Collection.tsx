@@ -13,12 +13,14 @@ export const Collection: FunctionalComponent<ICollection> = () => {
     ? data.collection?.products?.nodes?.map((node) => node)
     : [];
   return (
-    <div class="collection p-10">
-      <div className="collection__banner"></div>
-      <div className="collection__products grid grid-cols-4 gap-10">
-        {products.map((product) => (
-          <ProductCard product={product} />
-        ))}
+    <div class="collection">
+      <div className="collection__container container  py-20">
+        <div className="collection__banner"></div>
+        <div className="collection__products grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <ProductCard product={product} />
+          ))}
+        </div>
       </div>
     </div>
   );

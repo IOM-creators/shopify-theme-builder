@@ -1,10 +1,10 @@
 import { h, render } from "preact";
-import { ProductCard } from "./ProductCard";
+import { MainProduct } from "./MainProduct";
 import "./styles.scss";
 
 export default (element, data) => {
   const init = () => {
-    render(<ProductCard product={{}} />, element);
+    render(<MainProduct data={data} />, element);
   };
   init();
 };
