@@ -1,5 +1,16 @@
-// globalState.js
-let popupState = false;
+import { h, ComponentChildren } from "preact";
+
+interface IPopupState {
+  state: false;
+  content?: ComponentChildren;
+  title?: string;
+}
+
+let popupState: IPopupState = {
+  state: false,
+  content: "",
+  title: "",
+};
 let popupStateCallback: any = null;
 
 export const getPopupState = () => popupState;

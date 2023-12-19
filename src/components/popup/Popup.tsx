@@ -11,15 +11,8 @@ import { useEffect, useState } from "preact/hooks";
 interface IPopup {
   params?: any;
   className?: string;
-  title?: string;
-  children?: ComponentChildren;
 }
-export const Popup: FunctionalComponent<IPopup> = ({
-  children,
-  className,
-  title,
-  params,
-}) => {
+export const Popup: FunctionalComponent<IPopup> = ({ className, params }) => {
   const [popupState, setLocalPopupState] = useState(getPopupState);
 
   useEffect(() => {
@@ -33,15 +26,17 @@ export const Popup: FunctionalComponent<IPopup> = ({
   }, []);
 
   const closePopup = () => {
-    setPopupState(false);
+    setPopupState({
+      state: false,
+    });
   };
 
   return (
     <div
       className={cn(
         {
-          "visible opacity-100 transition duration-300": popupState,
-          "opacity-0 invisible": !popupState,
+          "visible opacity-100 transition duration-300": popupState.state,
+          "opacity-0 invisible": !popupState.state,
           className,
         },
         "popup fixed top-0 left-0 w-full h-full flex items-center justify-center"
@@ -54,12 +49,12 @@ export const Popup: FunctionalComponent<IPopup> = ({
       ></div>
       <div className="relative popup-wrapper w-[60%] h-[70%] bg-white">
         <div className="flex items-center justify-center popup-header text-center p-5">
-          <h2 className="text-2xl">{title}Title</h2>
+          <h2 className="text-2xl">{popupState.title}</h2>
           <button className="absolute right-4" onClick={closePopup}>
             <Icon icon="close" />
           </button>
         </div>
-        <div className="popup-conteiner">{children}</div>
+        <div className="popup-conteiner">{popupState.content}</div>
       </div>
     </div>
   );
