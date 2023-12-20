@@ -1,5 +1,5 @@
 import { h, FunctionalComponent } from "preact";
-
+import { Image } from "../image";
 interface IProductCard {
   product: any;
 }
@@ -8,8 +8,8 @@ export const ProductCard: FunctionalComponent<IProductCard> = ({ product }) => {
   return (
     <div class="product-card p-4 bg-gray-light">
       {product.featuredImage && (
-        <div className="product-card__image img-wrapper">
-          <img src={product.featuredImage.src} alt="" />
+        <div className="product-card__image">
+          <Image image={product.featuredImage} />
         </div>
       )}
       <div className="product-card__info mt-4">

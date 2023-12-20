@@ -33,6 +33,7 @@ export const getCart = `
     cart(id: $id) {
       lines(first: 10) {
         nodes {
+          quantity
           merchandise {
             ... on ProductVariant {
               ${fragments.productVariant}
@@ -47,6 +48,11 @@ export const getCart = `
 export const getCollection = `
   query getCollection($handle: String!) {
       collection(handle: $handle) {
+        title
+        image {
+          src
+          altText
+        }
         products(first: 10) {
           nodes {
               id
@@ -55,6 +61,7 @@ export const getCollection = `
               description
               featuredImage {
                 src
+                altText
               }
               priceRange {
                 maxVariantPrice {

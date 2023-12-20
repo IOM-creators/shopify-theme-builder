@@ -6,7 +6,8 @@ export const productVariant = `
         currencyCode
     }
     image{
-        url
+        src
+        altText
     }
     product {
         title

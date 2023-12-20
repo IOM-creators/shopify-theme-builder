@@ -1,4 +1,5 @@
 import { h, render } from "preact";
+import { Image } from "../image";
 import { Slider } from "./Slider";
 import { Slide } from "./Slide";
 
@@ -14,9 +15,7 @@ export default (element, data) => {
       {data.products &&
         data.products.map((slide: any) => (
           <Slide>
-            <div className="img-wrapper">
-              <img src={slide.featured_image} alt="" width={200} height={200} />
-            </div>
+            <Image image={slide.featured_image} />
             <h5>{slide.title}</h5>
           </Slide>
         ))}
