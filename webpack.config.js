@@ -1,6 +1,7 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -48,7 +49,6 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
-              // Stops url() imports (fonts) from running
               url: false,
               sourceMap: false,
             },
@@ -76,11 +76,8 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      chunkFilename: (pathData) => {
-        return pathData.chunk.name
-          ? `${pathData.chunk.name.replace("-index-tsx", "")}.css`
-          : "[name].css";
-      },
+      filename: "global.css",
+      runtime: false,
     }),
     new CopyPlugin({
       patterns: [
@@ -118,6 +115,30 @@ module.exports = {
       ],
     }),
   ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: "styles",
+          type: "css/mini-extract",
+          chunks: "all",
+          enforce: true,
+        },
+      },
+    },
+    minimize: process.env.NODE_ENV !== "development",
+    minimizer: [
+      new TerserPlugin({
+        // Stops license.txt files from generating
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+    ],
+  },
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js"],
   },

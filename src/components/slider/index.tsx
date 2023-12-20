@@ -1,7 +1,6 @@
 import { h, render } from "preact";
 import { Slider } from "./Slider";
 import { Slide } from "./Slide";
-import "./styles.scss";
 
 export default (element, data) => {
   const sliderParams = {
