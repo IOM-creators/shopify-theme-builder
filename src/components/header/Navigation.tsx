@@ -16,7 +16,9 @@ export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
     <div className="header__wrapper border-b">
       <div className="header__container flex items-center justify-between container py-4">
         <div className="header__logo">
-          <Icon icon="logo" />
+          <a href="/">
+            <Icon icon="logo" />
+          </a>
         </div>
         <div className="header__navigation">
           <nav>
@@ -30,6 +32,17 @@ export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
               ))}
             </ul>
           </nav>
+        </div>
+        <div className="header__icons">
+          <button className="p-2">
+            <Icon icon="search" />
+          </button>
+          <button className="p-2">
+            <Icon icon="account" />
+          </button>
+          <button className="p-2">
+            <Icon icon="cart" />
+          </button>
         </div>
       </div>
     </div>
