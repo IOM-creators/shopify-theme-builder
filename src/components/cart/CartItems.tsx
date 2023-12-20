@@ -6,6 +6,7 @@ import { CartItem } from "./CartItem";
 export const CartItems = () => {
   const data = getData(getCart());
   console.log("data", data);
+
   if (!data?.cart) return null;
   const cartItems = data.cart.lines.nodes.map((node) => ({
     ...node,

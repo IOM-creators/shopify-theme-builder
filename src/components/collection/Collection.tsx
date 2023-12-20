@@ -1,4 +1,4 @@
-import { h, FunctionalComponent } from "preact";
+import { h, FunctionalComponent, Fragment } from "preact";
 import { ProductCard } from "../product/ProductCard";
 import { getCollection } from "../../storefront/graphql/send-request";
 import { getData } from "../../helpers/get-data";
@@ -12,6 +12,7 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
   console.log("data", data);
   console.log("settings", settings);
   if (!data?.collection) return null;
+
   const collection = data.collection;
   const products = collection.products.nodes.map((node) => node);
   return (
