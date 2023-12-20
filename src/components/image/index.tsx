@@ -1,4 +1,4 @@
-import { Fragment, FunctionalComponent, h } from "preact";
+import { FunctionalComponent, h } from "preact";
 import cn from "classname";
 
 interface IImage {

@@ -18,7 +18,9 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
     <div class="collection">
       {settings.banner && (
         <div className="collection__banner relative">
-          <Image image={collection.image} className="before:pt-[50%]" />
+          {collection.image && (
+            <Image image={collection.image} className="before:pt-[50%]" />
+          )}
           <h1 className="text-5xl absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] ">
             {collection.title}
           </h1>

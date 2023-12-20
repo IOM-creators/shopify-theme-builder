@@ -23,7 +23,7 @@ export const CartItem: FunctionalComponent<ICartItem> = ({ item }) => {
   return (
     <div class="cart__item grid grid-cols-4 gap-10">
       <div className="cart__item-image">
-        <Image image={item.image} />
+        {item.image && <Image image={item.image} />}
       </div>
       <h3 className="cart__item-title">{item.product.title}</h3>
       <span className="cart__item-quantity">{item.quantity}</span>
