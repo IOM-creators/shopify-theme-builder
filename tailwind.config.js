@@ -60,7 +60,11 @@ module.exports = {
       },
       boxShadow: {
         simle: "0px 4px 32px 0px rgba(0, 0, 0, 0.08);",
+        bottom: "0px 5px 10px -5px rgba(0, 0, 0, 0.4)",
         primary: "0px 4px 15px 0px rgba(10, 38, 64, 0.4)",
+      },
+      gridTemplateColumns: {
+        "cart-items": "100px repeat(3, minmax(0, 1fr))",
       },
     },
     container: {

@@ -112,6 +112,15 @@ module.exports = {
             return path.resolve(__dirname, p);
           },
         },
+        {
+          from: path
+            .resolve(__dirname, "src/assets/icons/*.svg")
+            .replaceAll("\\", "/"),
+          to({ absoluteFilename }) {
+            const p = `assets/${path.basename(absoluteFilename)}`;
+            return path.resolve(__dirname, p);
+          },
+        },
       ],
     }),
   ],

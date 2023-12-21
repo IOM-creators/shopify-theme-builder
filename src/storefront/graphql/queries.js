@@ -59,47 +59,19 @@ mutation addToCart ($cartId: ID!, $merchandiseId: ID!, $quantity: Int!){
 `;
 
 export const getCollection = `
-  query getCollection($handle: String!) {
-      collection(handle: $handle) {
-        title
-        description
-        image {
-          src
-          altText
-        }
-        products(first: 10) {
-          nodes {
-              id
-              title
-              handle
-              description
-              featuredImage {
-                src
-                altText
-              }
-              priceRange {
-                maxVariantPrice {
-                  amount
-                  currencyCode
-                }
-                minVariantPrice {
-                  amount
-                  currencyCode
-                }
-              }
-              variants(first: 1) {
-                nodes {
-                  id
-                  compareAtPrice {
-                    amount
-                  }
-                  price {
-                    amount
-                  }
-                }
-              }
-          }
+  query getCollection($handle: String!, $sortType: ProductCollectionSortKeys, $first: Int!, $maxPrice: Float, $minPrice: Float) {
+    collection(handle: $handle) {
+      title
+      description
+      image {
+        src
+        altText
+      }
+      products(first: $first, sortKey: $sortType, filters: {price: {max: $maxPrice, min: $minPrice}}) {
+        nodes {
+          ${fragments.product}
         }
       }
+    },
   }
 `;

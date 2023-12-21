@@ -38,9 +38,8 @@ export const ProductCard: FunctionalComponent<IProductCard> = ({
     // });
   };
 
-  console.log("product", product);
   return (
-    <div class="product-card">
+    <div className="product-card">
       {product.featuredImage && (
         <div className="product-card__image relative">
           <Image image={product.featuredImage} className="before:pt-[150%]" />
