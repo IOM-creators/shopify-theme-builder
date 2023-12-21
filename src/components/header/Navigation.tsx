@@ -1,17 +1,9 @@
 import { h, FunctionalComponent } from "preact";
 import { Icon } from "../icon";
-import { setPopupState } from "../../state";
 interface INavigation {
   menu: any;
 }
 export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
-  const openPopup = (title) => {
-    setPopupState({
-      state: true,
-      content: <div>Popup content</div>,
-      title,
-    });
-  };
   return (
     <div className="header__wrapper border-b">
       <div className="header__container flex items-center justify-between container py-4">
@@ -40,9 +32,9 @@ export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
           <button className="p-2">
             <Icon icon="account" />
           </button>
-          <button className="p-2">
+          <a href="/cart" className="p-2 inline-flex">
             <Icon icon="cart" />
-          </button>
+          </a>
         </div>
       </div>
     </div>

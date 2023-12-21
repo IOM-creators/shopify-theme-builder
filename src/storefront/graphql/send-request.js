@@ -20,6 +20,23 @@ export const getCart = async () => {
     console.log("error", error);
   }
 };
+export const addToCart = async (productId) => {
+  try {
+    const cartToken = getCookie("cart");
+    if (!cartToken) return null;
+    const response = await storefront.request({
+      query: queries.addToCart,
+      variables: {
+        cartId: `gid://shopify/Cart/${cartToken}`,
+        merchandiseId: productId,
+        quantity: 1,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("error", error);
+  }
+};
 
 export const getCollection = async (handle) => {
   try {

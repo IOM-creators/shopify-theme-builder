@@ -44,11 +44,25 @@ export const getCart = `
     }
   }
 `;
+export const addToCart = `
+mutation addToCart ($cartId: ID!, $merchandiseId: ID!, $quantity: Int!){
+  cartLinesAdd(cartId: $cartId, lines: {merchandiseId: $merchandiseId, quantity: $quantity}) {
+    cart {
+      id
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+`;
 
 export const getCollection = `
   query getCollection($handle: String!) {
       collection(handle: $handle) {
         title
+        description
         image {
           src
           altText
@@ -75,6 +89,7 @@ export const getCollection = `
               }
               variants(first: 1) {
                 nodes {
+                  id
                   compareAtPrice {
                     amount
                   }

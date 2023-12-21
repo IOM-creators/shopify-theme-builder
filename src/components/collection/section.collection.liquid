@@ -3,6 +3,8 @@
   <script type="application/json" data-section-data>
     {   
       "handle": "{{collection.handle}}",
+      "isAddBtn": {{settings.is_add_btn}},
+      "isDescription": {{settings.is_description}},
       "banner": {{settings.banner}}
     }
   </script>
@@ -17,6 +19,16 @@
         "id": "banner",
         "label": "Banner Enable/Disable",
         "default": true
+      }, {
+        "type": "checkbox",
+        "id": "is_add_btn",
+        "label": "Add to cart button on cards Enable/Disable",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "is_description",
+        "label": "Description Enable/Disable",
+        "default": false
       }
     ]
   }

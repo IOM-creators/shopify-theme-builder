@@ -18,4 +18,25 @@
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+}
+button.loading {
+  pointer-events: none;
+}
+button.loading::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: url("loading.svg") no-repeat center/3rem #000;
+}
+
+.text-two-lines {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
