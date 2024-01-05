@@ -35,10 +35,7 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: [
-              ["@babel/preset-env", { modules: false }],
-              "@babel/preset-react",
-            ],
+            presets: ["@babel/preset-env", "@babel/preset-react"],
           },
         },
       },
@@ -133,6 +130,12 @@ module.exports = {
           chunks: "all",
           enforce: true,
         },
+        common: {
+          name: "vendor",
+          type: "javascript/auto",
+          chunks: "all",
+          enforce: true,
+        },
       },
     },
     minimize: process.env.NODE_ENV !== "development",
@@ -150,5 +153,11 @@ module.exports = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js"],
+    alias: {
+      react: "preact/compat",
+      "react-dom/test-utils": "preact/test-utils",
+      "react-dom": "preact/compat", // Must be below test-utils
+      "react/jsx-runtime": "preact/jsx-runtime",
+    },
   },
 };

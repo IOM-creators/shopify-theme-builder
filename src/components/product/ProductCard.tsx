@@ -3,7 +3,7 @@ import { Image } from "../image";
 import { setPopupState } from "../../state";
 import { Button } from "../button";
 import { useState } from "preact/hooks";
-import cn from "classname";
+import cn from "classnames";
 import { addToCart } from "../../storefront/graphql/send-request";
 
 interface IProductCard {

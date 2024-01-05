@@ -1,6 +1,6 @@
 import "./index.scss";
 
-(() => {
+function initProject() {
   const uniq = (value, index, self) => self.indexOf(value) === index;
   const sections: any = document.querySelectorAll("[data-section]");
   const sectionNames = [...sections]
@@ -22,4 +22,19 @@ import "./index.scss";
       })
       .catch(console.error);
   });
-})();
+}
+
+initProject();
+document.addEventListener("DOMContentLoaded", function () {
+  // Your code here will execute after the HTML document has been fully loaded and parsed
+  console.log("DOM content has been loaded!");
+});
+if (window?.Shopify && window.Shopify.designMode) {
+  window.addEventListener("shopify:section:load", () => {
+    document.body.classList.add("loading");
+    initProject();
+    setTimeout(() => {
+      document.body.classList.remove("loading");
+    }, 200);
+  });
+}

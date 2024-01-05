@@ -2,7 +2,7 @@ import { h, FunctionalComponent } from "preact";
 import { Button } from "../button";
 import { Icon } from "../icon";
 import { useState } from "preact/hooks";
-import cn from "classname";
+import cn from "classnames";
 
 interface IFilters {
   setMaxPrice: any;
@@ -35,10 +35,10 @@ export const Filters: FunctionalComponent<IFilters> = ({
       <div
         className={cn(
           {
-            "opacity-1 visible": isOpen,
-            "opacity-0 invisible": !isOpen,
+            "opacity-1 visible translate-x-[0]": isOpen,
+            "opacity-0 invisible translate-x-[-100%]": !isOpen,
           },
-          "filters__wrapper fixed top-0 left-0 z-10 w-128 h-full bg-white shadow-bottom"
+          "filters__wrapper fixed top-0 left-0 z-10 w-128 h-full bg-white shadow-bottom transition-transform"
         )}
       >
         <div className="filters__header py-10 px-5 text-center relative">

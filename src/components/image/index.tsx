@@ -1,5 +1,5 @@
 import { FunctionalComponent, h } from "preact";
-import cn from "classname";
+import cn from "classnames";
 
 interface IImage {
   className?: string;

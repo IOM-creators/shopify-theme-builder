@@ -1,5 +1,5 @@
 import { h, ComponentChildren, FunctionalComponent } from "preact";
-import cn from "classname";
+import cn from "classnames";
 
 interface ISlide {
   params?: any;

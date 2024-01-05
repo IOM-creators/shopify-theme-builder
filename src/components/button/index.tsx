@@ -1,5 +1,5 @@
 import { ComponentChildren, FunctionalComponent, h } from "preact";
-import cn from "classname";
+import cn from "classnames";
 import { Icon } from "../icon";
 
 interface IButton {

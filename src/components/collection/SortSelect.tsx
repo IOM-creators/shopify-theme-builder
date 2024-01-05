@@ -1,5 +1,5 @@
 import { h, FunctionalComponent } from "preact";
-import cn from "classname";
+import cn from "classnames";
 
 interface ISortSelect {
   setSortType: any;
