@@ -24,17 +24,11 @@ function initProject() {
   });
 }
 
-initProject();
 document.addEventListener("DOMContentLoaded", function () {
-  // Your code here will execute after the HTML document has been fully loaded and parsed
-  console.log("DOM content has been loaded!");
+  initProject();
 });
 if (window?.Shopify && window.Shopify.designMode) {
   window.addEventListener("shopify:section:load", () => {
-    document.body.classList.add("loading");
     initProject();
-    setTimeout(() => {
-      document.body.classList.remove("loading");
-    }, 200);
   });
 }

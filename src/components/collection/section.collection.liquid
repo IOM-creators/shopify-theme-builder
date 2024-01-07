@@ -5,7 +5,8 @@
       "handle": "{{collection.handle}}",
       "isAddBtn": {{settings.is_add_btn}},
       "isDescription": {{settings.is_description}},
-      "banner": {{settings.banner}}
+      "banner": {{settings.banner}},
+      "porudcts_per_page": {{settings.porudcts_per_page}}
     }
   </script>
 </section>
@@ -29,6 +30,12 @@
         "id": "is_description",
         "label": "Description Enable/Disable",
         "default": false
+      },
+      {
+        "type": "number",
+        "id": "porudcts_per_page",
+        "label": "Number of products per page",
+        "default": 20
       }
     ]
   }

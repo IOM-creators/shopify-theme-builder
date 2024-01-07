@@ -1,7 +1,8 @@
-import { h, FunctionalComponent, Fragment } from "preact";
+import { h, FunctionalComponent } from "preact";
+import cn from "classnames";
+
 import { ProductCard } from "../product/ProductCard";
 import { getCollection } from "../../storefront/graphql/send-request";
-import { getData } from "../../helpers/get-data";
 import { Image } from "../image";
 import { SortSelect } from "./SortSelect";
 import { useEffect, useState } from "preact/hooks";
@@ -14,16 +15,25 @@ type priceTypes = {
   max: number;
 };
 export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
-  const [sortType, setSortType] = useState(null);
-  const [maxPrice, setMaxPrice] = useState();
-  const [minPrice, setMinPrice] = useState();
+  const [loading, setLoading] = useState(false);
+  const [sortType, setSortType] = useState("TITLE");
+  const [dataFilters, setDataFilters] = useState([]);
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    getCollection(settings.handle, sortType, minPrice, maxPrice).then((res) => {
+    setLoading(true);
+    getCollection(
+      settings.handle,
+      sortType,
+      dataFilters,
+      settings.porudcts_per_page
+    ).then((res) => {
       setData(res);
     });
-  }, [sortType, minPrice, maxPrice]);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [sortType, dataFilters]);
 
   if (!data?.collection) return null;
 
@@ -50,9 +60,20 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
           </div>
         </div>
       )}
-      <div className="collection__container container py-20">
+      <div
+        className={cn(
+          { "loading before:bg-white-05 before:z-10": loading },
+          "collection__container container py-20"
+        )}
+      >
         <div className="collection__filters grid grid-cols-2 py-6 relative">
-          <Filters setMaxPrice={setMaxPrice} setMinPrice={setMinPrice} />
+          {collection?.products?.filters && (
+            <Filters
+              filters={collection.products.filters}
+              setDataFilters={setDataFilters}
+              dataFilters={dataFilters}
+            />
+          )}
           <SortSelect setSortType={setSortType} className="justify-self-end" />
         </div>
         <div className="collection__products grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">

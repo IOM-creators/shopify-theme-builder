@@ -59,19 +59,56 @@ mutation addToCart ($cartId: ID!, $merchandiseId: ID!, $quantity: Int!){
 `;
 
 export const getCollection = `
-  query getCollection($handle: String!, $sortType: ProductCollectionSortKeys, $first: Int!, $maxPrice: Float, $minPrice: Float) {
-    collection(handle: $handle) {
+query getCollection($handle: String!, $first: Int!, $filters: [ProductFilter!], $sortType: ProductCollectionSortKeys) {
+  collection(handle: $handle) {
       title
       description
       image {
         src
         altText
       }
-      products(first: $first, sortKey: $sortType, filters: {price: {max: $maxPrice, min: $minPrice}}) {
+      products(first: $first, sortKey: $sortType, filters: $filters) {
+        filters {
+          label
+          type
+          values {
+            count
+            input
+            label
+          }
+        }
         nodes {
           ${fragments.product}
         }
       }
+     
     },
   }
 `;
+
+/*variables for collection filters 
+{
+  tag: "test",
+},
+{ productType: "" },
+{ productVendor: "" },
+{
+  productMetafield: {
+    namespace: "",
+    key: "",
+    value: "",
+  },
+},
+{
+  variantOption: {
+    name: "",
+    value: "",
+  },
+},
+{
+  price: {
+    min: 40,
+    max: 35,
+  },
+},
+*/

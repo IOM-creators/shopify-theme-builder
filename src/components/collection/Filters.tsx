@@ -1,31 +1,43 @@
-import { h, FunctionalComponent } from "preact";
+import { h, FunctionalComponent, Fragment } from "preact";
 import { Button } from "../button";
 import { Icon } from "../icon";
 import { useState } from "preact/hooks";
 import cn from "classnames";
 
 interface IFilters {
-  setMaxPrice: any;
-  setMinPrice: any;
+  filters: any[];
+  setDataFilters: any;
+  dataFilters: any;
 }
-const filters = [];
 export const Filters: FunctionalComponent<IFilters> = ({
-  setMaxPrice,
-  setMinPrice,
+  filters,
+  setDataFilters,
+  dataFilters,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
+  const removeElementFromArray = (arr, object) => {
+    const indexToRemove = arr.findIndex(
+      (item) => item[Object.keys(object)[0]] === Object.values(object)[0]
+    );
 
-  const handleMaxPrice = (e) => {
-    setMaxPrice(+e.target.value);
+    indexToRemove !== -1 && arr.splice(indexToRemove, 1);
+
+    return arr;
+  };
+  const handleDataFilters = (e) => {
+    const filter = JSON.parse(e.target.dataset.typeFilter);
+
+    if (e.target.checked) {
+      setDataFilters([...dataFilters, filter]);
+    } else {
+      setDataFilters([...removeElementFromArray(dataFilters, filter)]);
+    }
   };
 
-  const handleMinPrice = (e) => {
-    setMinPrice(+e.target.value);
-  };
   return (
     <div className="collection__filters">
       <Button className="flex" onClick={handleOpen}>
@@ -38,7 +50,7 @@ export const Filters: FunctionalComponent<IFilters> = ({
             "opacity-1 visible translate-x-[0]": isOpen,
             "opacity-0 invisible translate-x-[-100%]": !isOpen,
           },
-          "filters__wrapper fixed top-0 left-0 z-10 w-128 h-full bg-white shadow-bottom transition-transform"
+          "filters__wrapper max-w-sm fixed top-0 left-0 z-10 w-128 h-full bg-white shadow-bottom transition-transform overflow-y-auto"
         )}
       >
         <div className="filters__header py-10 px-5 text-center relative">
@@ -50,38 +62,49 @@ export const Filters: FunctionalComponent<IFilters> = ({
             onClick={handleOpen}
           />
         </div>
-        <div className="filter__container px-5 pb-10">
-          <form id="dataPrice">
-            <div className="form-group grid grid-cols-2 gap-x-2">
-              <h3 className="form-group__title text-2xl col-span-2 mb-4">
-                Price
-              </h3>
-              <div className="form-element v">
-                <label htmlFor="minPrice"></label>
-                <input
-                  type="number"
-                  id="minPrice"
-                  name="min"
-                  placeholder="Min"
-                  className="w-full border p-2 appearance-none"
-                  onChange={handleMinPrice}
-                />
-              </div>
-              <div className="form-element ">
-                <label htmlFor="maxPrice"></label>
-                <input
-                  type="number"
-                  id="maxPrice"
-                  name="max"
-                  placeholder="Max"
-                  className="w-full border p-2 appearance-none"
-                  onChange={handleMaxPrice}
-                />
-              </div>
-            </div>
+        <div className="filter__container px-5 pb-5">
+          <form id="filtersData" onChange={handleDataFilters}>
+            {filters.map((filter) =>
+              filter.type === "LIST" ? (
+                <div className="form-group grid grid-cols-2 gap-x-2 mb-8">
+                  <h4 className="form-group__title text-xl col-span-2 mb-4">
+                    {filter.label}
+                  </h4>
+                  {filter.values.map((value) => (
+                    <div
+                      className={cn(
+                        {
+                          "text-disabled ": value.count === 0,
+                        },
+                        "form-element my-2"
+                      )}
+                    >
+                      <input
+                        id={value.label}
+                        type="checkbox"
+                        name={value.label}
+                        data-type-filter={value.input}
+                        value={value.label.toLowerCase()}
+                        className="p-2 mr-2"
+                      />
+                      <label htmlFor={value.label}>
+                        {value.label}
+                        <span className="text-silver text-sm">
+                          {" "}
+                          ({value.count})
+                        </span>
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <Fragment></Fragment>
+              )
+            )}
           </form>
         </div>
       </div>
     </div>
   );
 };
+//appearance-none

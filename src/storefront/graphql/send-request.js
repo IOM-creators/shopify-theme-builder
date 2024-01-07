@@ -41,19 +41,18 @@ export const addToCart = async (productId) => {
 export const getCollection = async (
   handle,
   sortType = "COLLECTION_DEFAULT",
-  minPrice = 0,
-  maxPrice = 9999999,
+  filters = [],
   first = 10
 ) => {
+  console.log("filters", filters);
   try {
     const response = await storefront.request({
       query: queries.getCollection,
       variables: {
         handle,
-        sortType,
         first,
-        maxPrice,
-        minPrice,
+        sortType,
+        filters: filters,
       },
     });
     return response.data;
