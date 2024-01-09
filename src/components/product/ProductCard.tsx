@@ -50,7 +50,7 @@ export const ProductCard: FunctionalComponent<IProductCard> = ({
                   "bg-white": isAdded,
                   "bg-black": !isAdded,
                 },
-                "absolute bottom-4 right-4 p-2 rounded-full border"
+                "absolute bottom-4 right-4 p-2 rounded-full border add-to-cart"
               )}
               onClick={() => handlePopup(product.variants.nodes[0].id)}
               icon={isAdded ? "added-to-cart" : "add-to-cart"}

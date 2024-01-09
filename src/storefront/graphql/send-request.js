@@ -44,7 +44,6 @@ export const getCollection = async (
   filters = [],
   first = 10
 ) => {
-  console.log("filters", filters);
   try {
     const response = await storefront.request({
       query: queries.getCollection,
@@ -56,6 +55,48 @@ export const getCollection = async (
       },
     });
     return response.data;
+  } catch (error) {
+    console.log("error", error);
+  }
+};
+export const getCollectionPoroducts = async (
+  handle,
+  sortType = "COLLECTION_DEFAULT",
+  filters = [],
+  first = 10,
+  statePage = "",
+  cursor = ""
+) => {
+  console.log("statePage", statePage);
+  const variables = {
+    handle,
+    first,
+    sortType,
+    filters,
+  };
+
+  try {
+    if (statePage === "after") {
+      variables.after = cursor;
+      const response = await storefront.request({
+        query: queries.getCollectionNextProducts,
+        variables,
+      });
+      return response.data;
+    } else if (statePage === "before") {
+      variables.before = cursor;
+      const response = await storefront.request({
+        query: queries.getCollectionPrevProducts,
+        variables,
+      });
+      return response.data;
+    } else {
+      const response = await storefront.request({
+        query: queries.getCollection,
+        variables,
+      });
+      return response.data;
+    }
   } catch (error) {
     console.log("error", error);
   }

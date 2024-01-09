@@ -77,12 +77,84 @@ query getCollection($handle: String!, $first: Int!, $filters: [ProductFilter!], 
             label
           }
         }
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
         nodes {
           ${fragments.product}
         }
       }
      
-    },
+    }
+  }
+`;
+export const getCollectionNextProducts = `
+query getCollectionNexProducts($handle: String!, $first: Int!, $filters: [ProductFilter!], $sortType: ProductCollectionSortKeys, $after: String!) {
+  collection(handle: $handle) {
+      title
+      description
+      image {
+        src
+        altText
+      }
+      products(first: $first, after: $after, sortKey: $sortType, filters: $filters) {
+        filters {
+          label
+          type
+          values {
+            count
+            input
+            label
+          }
+        }
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        nodes {
+          ${fragments.product}
+        }
+      }
+     
+    }
+  }
+`;
+export const getCollectionPrevProducts = `
+query getCollectionPrevProducts($handle: String!, $first: Int!, $filters: [ProductFilter!], $sortType: ProductCollectionSortKeys, $before: String!) {
+  collection(handle: $handle) {
+      title
+      description
+      image {
+        src
+        altText
+      }
+      products(last: $first, before: $before, sortKey: $sortType, filters: $filters) {
+        filters {
+          label
+          type
+          values {
+            count
+            input
+            label
+          }
+        }
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        nodes {
+          ${fragments.product}
+        }
+      }
+     
+    }
   }
 `;
 

@@ -2,11 +2,15 @@ import { h, FunctionalComponent } from "preact";
 import cn from "classnames";
 
 import { ProductCard } from "../product/ProductCard";
-import { getCollection } from "../../storefront/graphql/send-request";
+import {
+  getCollection,
+  getCollectionPoroducts,
+} from "../../storefront/graphql/send-request";
 import { Image } from "../image";
 import { SortSelect } from "./SortSelect";
 import { useEffect, useState } from "preact/hooks";
 import { Filters } from "./Filters";
+import { Pagination } from "./Paginations";
 interface ICollection {
   settings?: any;
 }
@@ -15,30 +19,64 @@ type priceTypes = {
   max: number;
 };
 export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [sortType, setSortType] = useState("TITLE");
   const [dataFilters, setDataFilters] = useState([]);
-  const [data, setData] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [statePage, setStatePage] = useState("");
 
   useEffect(() => {
-    setLoading(true);
-    getCollection(
-      settings.handle,
-      sortType,
-      dataFilters,
-      settings.porudcts_per_page
-    ).then((res) => {
-      setData(res);
-    });
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, [sortType, dataFilters]);
+    if (
+      data?.collection?.products?.pageInfo?.hasNextPage &&
+      statePage === "after"
+    ) {
+      getCollectionPoroducts(
+        settings.handle,
+        sortType,
+        dataFilters,
+        settings.porudcts_per_page,
+        statePage,
+        data?.collection?.products?.pageInfo?.endCursor
+      ).then((res) => {
+        setData(res);
+        setProducts([
+          ...products,
+          ...res.collection.products.nodes.map((node) => node),
+        ]);
+      });
+    } else if (
+      data?.collection?.products?.pageInfo?.hasPreviousPage &&
+      statePage === "before"
+    ) {
+      getCollectionPoroducts(
+        settings.handle,
+        sortType,
+        dataFilters,
+        settings.porudcts_per_page,
+        statePage,
+        data?.collection?.products?.pageInfo?.startCursor
+      ).then((res) => {
+        setData(res);
+      });
+    } else {
+      getCollection(
+        settings.handle,
+        sortType,
+        dataFilters,
+        settings.porudcts_per_page
+      ).then((res) => {
+        setData(res);
+        setProducts(res.collection.products.nodes.map((node) => node));
+      });
+    }
+  }, [sortType, dataFilters, page, statePage]);
 
   if (!data?.collection) return null;
+  console.log("products", products);
 
   const collection = data.collection;
-  const products = collection.products.nodes.map((node) => node);
   return (
     <div className="collection">
       {settings.banner ? (
@@ -85,6 +123,13 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
             />
           ))}
         </div>
+        <Pagination
+          productsCount={settings.all_products_count}
+          perPage={settings.porudcts_per_page}
+          setPage={setPage}
+          setStatePage={setStatePage}
+          page={page}
+        />
       </div>
     </div>
   );
