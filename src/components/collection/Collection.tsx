@@ -2,10 +2,16 @@ import { h, FunctionalComponent } from "preact";
 import cn from "classnames";
 
 import { ProductCard } from "../product/ProductCard";
+import { getCollection } from "../../storefront/graphql/send-request";
 import {
-  getCollection,
-  getCollectionPoroducts,
-} from "../../storefront/graphql/send-request";
+  getCollectionState,
+  setCollectionState,
+  subscribeToCollectionState,
+  getFiltersState,
+  subscribeToFiltersState,
+  subscribeToSortState,
+  getSortState,
+} from "../../state/collection";
 import { Image } from "../image";
 import { SortSelect } from "./SortSelect";
 import { useEffect, useState } from "preact/hooks";
@@ -14,69 +20,56 @@ import { Pagination } from "./Paginations";
 interface ICollection {
   settings?: any;
 }
-type priceTypes = {
-  min: number;
-  max: number;
-};
 export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [sortType, setSortType] = useState("TITLE");
-  const [dataFilters, setDataFilters] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(1);
-  const [statePage, setStatePage] = useState("");
+  const [collectionState, setLocalCollectionState] =
+    useState(getCollectionState);
+  const [filtersState, setLocalFiltersState] = useState(getFiltersState);
+  const [sortState, setLocalSortState] = useState(getSortState);
 
   useEffect(() => {
-    if (
-      data?.collection?.products?.pageInfo?.hasNextPage &&
-      statePage === "after"
-    ) {
-      getCollectionPoroducts(
-        settings.handle,
-        sortType,
-        dataFilters,
-        settings.porudcts_per_page,
-        statePage,
-        data?.collection?.products?.pageInfo?.endCursor
-      ).then((res) => {
-        setData(res);
-        setProducts([
-          ...products,
-          ...res.collection.products.nodes.map((node) => node),
-        ]);
-      });
-    } else if (
-      data?.collection?.products?.pageInfo?.hasPreviousPage &&
-      statePage === "before"
-    ) {
-      getCollectionPoroducts(
-        settings.handle,
-        sortType,
-        dataFilters,
-        settings.porudcts_per_page,
-        statePage,
-        data?.collection?.products?.pageInfo?.startCursor
-      ).then((res) => {
-        setData(res);
-      });
-    } else {
-      getCollection(
-        settings.handle,
-        sortType,
-        dataFilters,
-        settings.porudcts_per_page
-      ).then((res) => {
-        setData(res);
-        setProducts(res.collection.products.nodes.map((node) => node));
-      });
-    }
-  }, [sortType, dataFilters, page, statePage]);
+    const callback = (newCollectionState) => {
+      setLocalCollectionState(newCollectionState);
+    };
+    subscribeToCollectionState(callback);
+    return () => {
+      subscribeToCollectionState(null);
+    };
+  }, []);
 
-  if (!data?.collection) return null;
-  console.log("products", products);
+  useEffect(() => {
+    const callback = (newFiltersState) => {
+      setLocalFiltersState(newFiltersState);
+    };
+    subscribeToFiltersState(callback);
+    return () => {
+      subscribeToFiltersState(null);
+    };
+  }, []);
 
-  const collection = data.collection;
+  useEffect(() => {
+    const callback = (newSortState) => {
+      setLocalSortState(newSortState);
+    };
+    subscribeToSortState(callback);
+    return () => {
+      subscribeToSortState(null);
+    };
+  }, []);
+
+  useEffect(() => {
+    getCollection(
+      settings.handle,
+      settings.porudcts_per_page,
+      filtersState,
+      sortState
+    ).then((res) => {
+      setCollectionState(res);
+    });
+  }, [filtersState, sortState]);
+
+  if (!collectionState?.collection) return null;
+
+  const collection = collectionState.collection;
   return (
     <div className="collection">
       {settings.banner ? (
@@ -100,22 +93,18 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
       )}
       <div
         className={cn(
-          { "loading before:bg-white-05 before:z-10": loading },
+          { "loading before:bg-white-05 before:z-10": false },
           "collection__container container py-20"
         )}
       >
         <div className="collection__filters grid grid-cols-2 py-6 relative">
           {collection?.products?.filters && (
-            <Filters
-              filters={collection.products.filters}
-              setDataFilters={setDataFilters}
-              dataFilters={dataFilters}
-            />
+            <Filters filters={collection.products.filters} />
           )}
-          <SortSelect setSortType={setSortType} className="justify-self-end" />
+          <SortSelect className="justify-self-end" />
         </div>
         <div className="collection__products grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-          {products.map((product) => (
+          {collection.products.nodes.map((product) => (
             <ProductCard
               product={product}
               isAddBtn={settings.isAddBtn}
@@ -123,13 +112,12 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
             />
           ))}
         </div>
-        <Pagination
-          productsCount={settings.all_products_count}
-          perPage={settings.porudcts_per_page}
-          setPage={setPage}
-          setStatePage={setStatePage}
-          page={page}
-        />
+        {collection?.products?.pageInfo?.hasNextPage && (
+          <Pagination
+            productsCount={settings.all_products_count}
+            perPage={settings.porudcts_per_page}
+          />
+        )}
       </div>
     </div>
   );

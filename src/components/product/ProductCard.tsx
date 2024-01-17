@@ -1,6 +1,6 @@
 import { h, FunctionalComponent } from "preact";
 import { Image } from "../image";
-import { setPopupState } from "../../state";
+import { setPopupState } from "../../state/popup";
 import { Button } from "../button";
 import { useState } from "preact/hooks";
 import cn from "classnames";

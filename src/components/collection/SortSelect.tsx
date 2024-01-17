@@ -1,8 +1,9 @@
 import { h, FunctionalComponent } from "preact";
 import cn from "classnames";
+import { useEffect, useState } from "preact/hooks";
+import { setSortState } from "../../state/collection";
 
 interface ISortSelect {
-  setSortType: any;
   className?: string;
 }
 const sortTypes = [
@@ -14,13 +15,17 @@ const sortTypes = [
   "COLLECTION_DEFAULT",
   "RELEVANCE",
 ];
-export const SortSelect: FunctionalComponent<ISortSelect> = ({
-  setSortType,
-  className,
-}) => {
+export const SortSelect: FunctionalComponent<ISortSelect> = ({ className }) => {
+  const [sortData, setSortData] = useState<string>("TITLE");
+
   const handleSelect = (e) => {
-    setSortType(e.target.value);
+    setSortData(e.target.value);
   };
+
+  useEffect(() => {
+    setSortState(sortData);
+  }, [sortData]);
+
   return (
     <div className={cn(className, {}, "collection__sort-select")}>
       <select name="sortType" id="sortType" onChange={handleSelect}>

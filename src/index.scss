@@ -34,8 +34,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("loading-black.svg") no-repeat center/3rem
-    rgba(255, 255, 255, 0.7);
+  background: url("loading-black.svg") no-repeat center/3rem var(--white);
 }
 
 button.add-to-cart.loading::before {

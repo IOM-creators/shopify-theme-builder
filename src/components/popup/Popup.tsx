@@ -5,7 +5,7 @@ import {
   getPopupState,
   setPopupState,
   subscribeToPopupState,
-} from "../../state";
+} from "../../state/popup";
 import { useEffect, useState } from "preact/hooks";
 
 interface IPopup {

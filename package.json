@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "config": {
+    "dev": "test-store-iom",
+    "prod": "test-store-iom"
+  },
   "scripts": {
-    "start": "shopify theme dev",
-    "deploy": "run-s build && cross-var shopify theme push --store=test-store-iom",
-    "deploy:new": "run-s build && cross-var shopify theme push --store=test-store-iom -n -u",
+    "start": "cross-var shopify theme dev --store=$npm_package_config_dev",
+    "deploy": "run-s build && cross-var shopify theme push --store=$npm_package_config_dev",
+    "deploy:new": "run-s build && cross-var shopify theme push --store=$npm_package_config_dev -n -u",
     "dev": "rm -rf sections snippets && cross-env NODE_ENV=development webpack --config webpack.config.js",
     "build": "rm -rf sections snippets && cross-env NODE_ENV=production webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"

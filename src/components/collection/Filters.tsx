@@ -1,42 +1,37 @@
 import { h, FunctionalComponent, Fragment } from "preact";
 import { Button } from "../button";
 import { Icon } from "../icon";
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import cn from "classnames";
-
+import { setFiltersState } from "../../state/collection";
 interface IFilters {
   filters: any[];
-  setDataFilters: any;
-  dataFilters: any;
 }
-export const Filters: FunctionalComponent<IFilters> = ({
-  filters,
-  setDataFilters,
-  dataFilters,
-}) => {
+export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [filtersData, setFiltersData] = useState<any>([]);
 
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
   const removeElementFromArray = (arr, object) => {
     const indexToRemove = arr.findIndex(
-      (item) => item[Object.keys(object)[0]] === Object.values(object)[0]
+      (item) => JSON.stringify(item) === JSON.stringify(object)
     );
-
     indexToRemove !== -1 && arr.splice(indexToRemove, 1);
-
     return arr;
   };
   const handleDataFilters = (e) => {
     const filter = JSON.parse(e.target.dataset.typeFilter);
-
     if (e.target.checked) {
-      setDataFilters([...dataFilters, filter]);
+      setFiltersData([...filtersData, filter]);
     } else {
-      setDataFilters([...removeElementFromArray(dataFilters, filter)]);
+      setFiltersData([...removeElementFromArray(filtersData, filter)]);
     }
   };
+  useEffect(() => {
+    setFiltersState(filtersData);
+  }, [filtersData]);
 
   return (
     <div className="collection__filters">

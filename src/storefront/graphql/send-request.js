@@ -40,9 +40,9 @@ export const addToCart = async (productId) => {
 
 export const getCollection = async (
   handle,
-  sortType = "COLLECTION_DEFAULT",
+  first = 10,
   filters = [],
-  first = 10
+  sortType = "COLLECTION_DEFAULT"
 ) => {
   try {
     const response = await storefront.request({
@@ -50,8 +50,8 @@ export const getCollection = async (
       variables: {
         handle,
         first,
+        filters,
         sortType,
-        filters: filters,
       },
     });
     return response.data;

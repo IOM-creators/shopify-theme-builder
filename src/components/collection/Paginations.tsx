@@ -6,16 +6,10 @@ import { Button } from "../button";
 interface IPagination {
   productsCount: number;
   perPage: number;
-  setPage: any;
-  setStatePage: any;
-  page: number;
 }
 export const Pagination: FunctionalComponent<IPagination> = ({
   productsCount,
   perPage,
-  setPage,
-  page,
-  setStatePage,
 }) => {
   const [loading, setLoading] = useState(false);
   const pages = Array.from(
