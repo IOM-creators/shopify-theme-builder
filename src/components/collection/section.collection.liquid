@@ -5,6 +5,7 @@
       "all_products_count": "{{collection.all_products_count}}",
       "handle": "{{collection.handle}}",
       "isAddBtn": {{settings.is_add_btn}},
+      "typePagination": "{{settings.type_pagination}}",
       "isDescription": {{settings.is_description}},
       "banner": {{settings.banner}},
       "porudcts_per_page": {{settings.porudcts_per_page}}
@@ -20,7 +21,7 @@
         "type": "checkbox",
         "id": "banner",
         "label": "Banner Enable/Disable",
-        "default": true
+        "default": false
       }, {
         "type": "checkbox",
         "id": "is_add_btn",
@@ -31,6 +32,22 @@
         "id": "is_description",
         "label": "Description Enable/Disable",
         "default": false
+      },
+      {
+        "type": "radio",
+        "id": "type_pagination",
+        "label": "Type pagination",
+        "options": [
+          {
+            "value": "load_more",
+            "label": "Load More"
+          },
+          {
+            "value": "numbers",
+            "label": "Numbers"
+          }
+        ],
+        "default": "load_more"
       },
       {
         "type": "number",

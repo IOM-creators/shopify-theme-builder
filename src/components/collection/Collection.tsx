@@ -116,6 +116,7 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
           <Pagination
             productsCount={settings.all_products_count}
             perPage={settings.porudcts_per_page}
+            typePagination={settings.typePagination}
           />
         )}
       </div>

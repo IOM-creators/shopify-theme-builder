@@ -3,9 +3,15 @@
     "collection": {
       "type": "collection",
       "settings": {
-        "text": "hello"
+        "banner": true,
+        "is_add_btn": true,
+        "is_description": true,
+        "type_pagination": "numbers",
+        "porudcts_per_page": 3
       }
     }
   },
-  "order": ["collection"]
+  "order": [
+    "collection"
+  ]
 }

@@ -6,10 +6,12 @@ import { Button } from "../button";
 interface IPagination {
   productsCount: number;
   perPage: number;
+  typePagination: string;
 }
 export const Pagination: FunctionalComponent<IPagination> = ({
   productsCount,
   perPage,
+  typePagination,
 }) => {
   const [loading, setLoading] = useState(false);
   const pages = Array.from(
@@ -18,25 +20,23 @@ export const Pagination: FunctionalComponent<IPagination> = ({
   );
   const handlePage = () => {
     setLoading(true);
-    setPage(page + 1);
-    setStatePage("after");
-
     setTimeout(() => {
       setLoading(false);
     }, 300);
-    // if (p > page) {
-    //   setPage(p);
-    //   setStatePage("after");
-    // } else if (p < page) {
-    //   setPage(p);
-    //   setStatePage("before");
-    // }
   };
   return (
     <div className="pagination py-5 text-center">
-      <Button onClick={handlePage} loading={loading} className="border p-3">
-        View more
-      </Button>
+      {typePagination === "load_more" ? (
+        <Button onClick={handlePage} loading={loading} className="border p-3">
+          View more
+        </Button>
+      ) : (
+        <ul className="flex justify-center">
+          {pages.map((num) => (
+            <li className="p-4 underline">{num}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
