@@ -3,7 +3,7 @@ import { Button } from "../button";
 import { Icon } from "../icon";
 import { useEffect, useState } from "preact/hooks";
 import cn from "classnames";
-import { setFiltersState } from "../../state/collection";
+import { setFiltersState, setPaginationState } from "../../state/collection";
 interface IFilters {
   filters: any[];
 }
@@ -30,6 +30,7 @@ export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
     }
   };
   useEffect(() => {
+    setPaginationState(1);
     setFiltersState(filtersData);
   }, [filtersData]);
 
