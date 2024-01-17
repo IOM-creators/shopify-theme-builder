@@ -77,3 +77,19 @@ export const setSortState = (value) => {
 export const subscribeToSortState = (callback) => {
   sortStateCallback = callback;
 };
+
+let paginationState: number = 1;
+let paginationStateCallback: any = null;
+
+export const getPaginationState = () => paginationState;
+
+export const setPaginationState = (value) => {
+  paginationState = value;
+  if (paginationStateCallback) {
+    paginationStateCallback(value);
+  }
+};
+
+export const subscribeToPaginationState = (callback) => {
+  paginationStateCallback = callback;
+};

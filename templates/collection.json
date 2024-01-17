@@ -6,12 +6,10 @@
         "banner": true,
         "is_add_btn": true,
         "is_description": true,
-        "type_pagination": "numbers",
+        "type_pagination": "load_more",
         "porudcts_per_page": 3
       }
     }
   },
-  "order": [
-    "collection"
-  ]
+  "order": ["collection"]
 }

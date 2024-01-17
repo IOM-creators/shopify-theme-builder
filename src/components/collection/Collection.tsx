@@ -11,6 +11,8 @@ import {
   subscribeToFiltersState,
   subscribeToSortState,
   getSortState,
+  subscribeToPaginationState,
+  getPaginationState,
 } from "../../state/collection";
 import { Image } from "../image";
 import { SortSelect } from "./SortSelect";
@@ -25,6 +27,8 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
     useState(getCollectionState);
   const [filtersState, setLocalFiltersState] = useState(getFiltersState);
   const [sortState, setLocalSortState] = useState(getSortState);
+  const [paginationState, setLocalPaginationState] =
+    useState(getPaginationState);
 
   useEffect(() => {
     const callback = (newCollectionState) => {
@@ -47,6 +51,16 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
   }, []);
 
   useEffect(() => {
+    const callback = (newPaginationState) => {
+      setLocalPaginationState(newPaginationState);
+    };
+    subscribeToPaginationState(callback);
+    return () => {
+      subscribeToPaginationState(null);
+    };
+  }, []);
+
+  useEffect(() => {
     const callback = (newSortState) => {
       setLocalSortState(newSortState);
     };
@@ -59,13 +73,13 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
   useEffect(() => {
     getCollection(
       settings.handle,
-      settings.porudcts_per_page,
+      settings.porudcts_per_page * paginationState,
       filtersState,
       sortState
     ).then((res) => {
       setCollectionState(res);
     });
-  }, [filtersState, sortState]);
+  }, [filtersState, sortState, paginationState]);
 
   if (!collectionState?.collection) return null;
 
