@@ -10,11 +10,18 @@ import { useState } from "preact/hooks";
 
 interface ICartItem {
   item: {
+    lineId: string;
     quantity: number;
     title: string;
     price: {
       amount: string;
       currencyCode: string;
+    };
+    cost: {
+      totalAmount: {
+        amount: string;
+        currencyCode: string;
+      };
     };
     image: {
       src: string;
