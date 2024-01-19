@@ -6,7 +6,7 @@
         "banner": true,
         "is_add_btn": true,
         "is_description": true,
-        "type_pagination": "load_more",
+        "type_pagination": "numbers",
         "porudcts_per_page": 3
       }
     }

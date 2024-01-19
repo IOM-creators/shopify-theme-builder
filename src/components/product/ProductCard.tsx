@@ -1,10 +1,10 @@
 import { h, FunctionalComponent } from "preact";
 import { Image } from "../image";
-import { setPopupState } from "../../state/popup";
 import { Button } from "../button";
 import { useState } from "preact/hooks";
 import cn from "classnames";
 import { addToCart } from "../../storefront/graphql/send-request";
+import { setCartState } from "../../state/cart";
 
 interface IProductCard {
   product: any;
@@ -29,13 +29,8 @@ export const ProductCard: FunctionalComponent<IProductCard> = ({
     } else {
       setLoading(false);
       setAdded(true);
+      setCartState(res.cartLinesAdd);
     }
-    console.log("isAdded", isAdded);
-    // setPopupState({
-    //   state: true,
-    //   content: <div>Popup content</div>,
-    //   title,
-    // });
   };
 
   return (

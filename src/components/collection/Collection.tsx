@@ -29,6 +29,9 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
   const [sortState, setLocalSortState] = useState(getSortState);
   const [paginationState, setLocalPaginationState] =
     useState(getPaginationState);
+  const [products, setProducts] = useState([]);
+  const [numbersPagination] = useState(settings.type_pagination === "numbers");
+  const [showPagination, setShowPagination] = useState(false);
 
   useEffect(() => {
     const callback = (newCollectionState) => {
@@ -78,6 +81,28 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
       sortState
     ).then((res) => {
       setCollectionState(res);
+      numbersPagination
+        ? setShowPagination(numbersPagination)
+        : setShowPagination(res.collection.products.pageInfo.hasNextPage);
+
+      if (numbersPagination) {
+        if (paginationState > 1) {
+          setProducts(
+            res.collection.products.nodes.filter(
+              (p, ind) =>
+                ind + 1 > settings.porudcts_per_page * (paginationState - 1)
+            )
+          );
+        } else {
+          setProducts(
+            res.collection.products.nodes.filter(
+              (p, ind) => ind < settings.porudcts_per_page * paginationState
+            )
+          );
+        }
+      } else {
+        setProducts(res.collection.products.nodes);
+      }
     });
   }, [filtersState, sortState, paginationState]);
 
@@ -118,19 +143,19 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
           <SortSelect className="justify-self-end" />
         </div>
         <div className="collection__products grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-          {collection.products.nodes.map((product) => (
+          {products.map((product) => (
             <ProductCard
               product={product}
-              isAddBtn={settings.isAddBtn}
-              isDescription={settings.isDescription}
+              isAddBtn={settings.is_add_btn}
+              isDescription={settings.is_description}
             />
           ))}
         </div>
-        {collection?.products?.pageInfo?.hasNextPage && (
+        {showPagination && (
           <Pagination
             productsCount={settings.all_products_count}
             perPage={settings.porudcts_per_page}
-            typePagination={settings.typePagination}
+            typePagination={settings.type_pagination}
           />
         )}
       </div>

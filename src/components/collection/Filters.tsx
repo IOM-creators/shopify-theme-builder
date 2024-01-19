@@ -44,9 +44,9 @@ export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
         className={cn(
           {
             "opacity-1 visible translate-x-[0]": isOpen,
-            "opacity-0 invisible translate-x-[-100%]": !isOpen,
+            "opacity-0 invisible translate-x-[100%]": !isOpen,
           },
-          "filters__wrapper max-w-sm fixed top-0 left-0 z-10 w-128 h-full bg-white shadow-bottom transition-transform overflow-y-auto"
+          "filters__wrapper max-w-sm fixed top-0 right-0 z-10 w-128 h-full bg-white shadow-bottom transition-transform overflow-y-auto"
         )}
       >
         <div className="filters__header py-10 px-5 text-center relative">

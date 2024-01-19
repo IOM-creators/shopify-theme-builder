@@ -1,9 +1,31 @@
 import { h, FunctionalComponent } from "preact";
 import { Icon } from "../icon";
+import { getCart } from "../../storefront/graphql/send-request";
+import { getCartState, subscribeToCartState } from "../../state/cart";
+import { useEffect, useState } from "preact/hooks";
 interface INavigation {
   menu: any;
 }
 export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
+  const [cartState, setLocalCartState] = useState(getCartState);
+  const [totalQuantity, setTotalQuantity] = useState(null);
+
+  useEffect(() => {
+    const callback = (newCartState) => {
+      setLocalCartState(newCartState);
+    };
+    subscribeToCartState(callback);
+    return () => {
+      subscribeToCartState(null);
+    };
+  }, []);
+
+  useEffect(() => {
+    getCart().then((res) => {
+      setTotalQuantity(res.cart.totalQuantity);
+    });
+  }, [cartState]);
+
   return (
     <div className="header__wrapper border-b">
       <div className="header__container flex items-center justify-between container py-4">
@@ -34,6 +56,7 @@ export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
           </button>
           <a href="/cart" className="p-2 inline-flex">
             <Icon icon="cart" />
+            {totalQuantity && <span>{totalQuantity}</span>}
           </a>
         </div>
       </div>

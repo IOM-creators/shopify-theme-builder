@@ -37,6 +37,39 @@ export const addToCart = async (productId) => {
     console.log("error", error);
   }
 };
+export const removeFromCart = async (lineIds) => {
+  try {
+    const cartToken = getCookie("cart");
+    if (!cartToken) return null;
+    const response = await storefront.request({
+      query: queries.removeFromCart,
+      variables: {
+        cartId: `gid://shopify/Cart/${cartToken}`,
+        lineIds: [lineIds],
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("error", error);
+  }
+};
+export const updateCartItem = async (lineId, quantity) => {
+  try {
+    const cartToken = getCookie("cart");
+    if (!cartToken) return null;
+    const response = await storefront.request({
+      query: queries.updateCartItem,
+      variables: {
+        cartId: `gid://shopify/Cart/${cartToken}`,
+        lineId,
+        quantity,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("error", error);
+  }
+};
 
 export const getCollection = async (
   handle,
@@ -55,48 +88,6 @@ export const getCollection = async (
       },
     });
     return response.data;
-  } catch (error) {
-    console.log("error", error);
-  }
-};
-export const getCollectionPoroducts = async (
-  handle,
-  sortType = "COLLECTION_DEFAULT",
-  filters = [],
-  first = 10,
-  statePage = "",
-  cursor = ""
-) => {
-  console.log("statePage", statePage);
-  const variables = {
-    handle,
-    first,
-    sortType,
-    filters,
-  };
-
-  try {
-    if (statePage === "after") {
-      variables.after = cursor;
-      const response = await storefront.request({
-        query: queries.getCollectionNextProducts,
-        variables,
-      });
-      return response.data;
-    } else if (statePage === "before") {
-      variables.before = cursor;
-      const response = await storefront.request({
-        query: queries.getCollectionPrevProducts,
-        variables,
-      });
-      return response.data;
-    } else {
-      const response = await storefront.request({
-        query: queries.getCollection,
-        variables,
-      });
-      return response.data;
-    }
   } catch (error) {
     console.log("error", error);
   }

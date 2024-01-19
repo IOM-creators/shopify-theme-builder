@@ -66,7 +66,7 @@ module.exports = {
         primary: "0px 4px 15px 0px rgba(10, 38, 64, 0.4)",
       },
       gridTemplateColumns: {
-        "cart-items": "100px repeat(3, minmax(0, 1fr))",
+        "cart-items": "100px repeat(4, minmax(0, 1fr))",
       },
     },
     container: {

@@ -15,15 +15,17 @@ export const Pagination: FunctionalComponent<IPagination> = ({
   typePagination,
 }) => {
   const [loading, setLoading] = useState(false);
+  const [activePage, setActivePage] = useState(1);
   const [paginationData, setPaginationData] = useState<number>(1);
   const pages = Array.from(
-    { length: Math.floor(productsCount / perPage) },
+    { length: Math.ceil(productsCount / perPage) },
     (_, index) => index + 1
   );
   const handlePage = (page): void => {
     setLoading(true);
     if (page) {
       setPaginationData(page);
+      setActivePage(page);
     } else {
       setPaginationData(paginationData + 1);
     }
@@ -37,7 +39,7 @@ export const Pagination: FunctionalComponent<IPagination> = ({
   }, [paginationData]);
 
   return (
-    <div className="pagination py-5 text-center">
+    <div className="pagination py-5 text-center mt-5">
       {typePagination === "load_more" ? (
         <Button
           onClick={() => handlePage(null)}
@@ -50,7 +52,10 @@ export const Pagination: FunctionalComponent<IPagination> = ({
         <ul className="flex justify-center">
           {pages.map((num) => (
             <li
-              className="p-4 underline cursor-pointer"
+              className={cn(
+                { border: activePage === num },
+                "px-4 py-2 cursor-pointer"
+              )}
               onClick={() => handlePage(num)}
             >
               {num}
