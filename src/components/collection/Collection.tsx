@@ -32,6 +32,7 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
   const [products, setProducts] = useState([]);
   const [numbersPagination] = useState(settings.type_pagination === "numbers");
   const [showPagination, setShowPagination] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const callback = (newCollectionState) => {
@@ -74,6 +75,7 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     getCollection(
       settings.handle,
       settings.porudcts_per_page * paginationState,
@@ -103,6 +105,7 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
       } else {
         setProducts(res.collection.products.nodes);
       }
+      setLoading(false);
     });
   }, [filtersState, sortState, paginationState]);
 
@@ -132,7 +135,7 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
       )}
       <div
         className={cn(
-          { "loading before:bg-white-05 before:z-10": false },
+          { "loading before:bg-white-05 before:z-10": loading },
           "collection__container container py-20"
         )}
       >
