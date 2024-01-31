@@ -4,6 +4,7 @@ import { Icon } from "../icon";
 import { useEffect, useState } from "preact/hooks";
 import cn from "classnames";
 import { setFiltersState, setPaginationState } from "../../state/collection";
+import { AccordionItem } from "../accordion/Accordion";
 interface IFilters {
   filters: any[];
 }
@@ -62,10 +63,11 @@ export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
           <form id="filtersData" onChange={handleDataFilters}>
             {filters.map((filter) =>
               filter.type === "LIST" ? (
-                <div className="form-group grid grid-cols-2 gap-x-2 mb-8">
-                  <h4 className="form-group__title text-xl col-span-2 mb-4">
-                    {filter.label}
-                  </h4>
+                <AccordionItem
+                  classContent="form-group grid grid-cols-2 gap-x-2"
+                  title={filter.label}
+                  classTitle="form-group__title text-xl col-span-2 mb-4"
+                >
                   {filter.values.map((value) => (
                     <div
                       className={cn(
@@ -92,7 +94,7 @@ export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
                       </label>
                     </div>
                   ))}
-                </div>
+                </AccordionItem>
               ) : (
                 <Fragment></Fragment>
               )

@@ -2,12 +2,8 @@
   "sections": {
     "7d628f65-acbd-4bfd-ad35-bf501748a1ea": {
       "type": "slider",
-      "settings": {
-        "collection": "frontpage"
-      }
+      "settings": {}
     }
   },
-  "order": [
-    "7d628f65-acbd-4bfd-ad35-bf501748a1ea"
-  ]
+  "order": ["7d628f65-acbd-4bfd-ad35-bf501748a1ea"]
 }
