@@ -117,9 +117,9 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
       {settings.banner ? (
         <div className="collection__banner relative">
           {collection.image && (
-            <Image image={collection.image} className="before:pt-[30%]" />
+            <Image image={collection.image} className="md:before:pt-[30%]" />
           )}
-          <h1 className="text-5xl absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] bg-white-05 p-4">
+          <h1 className="text-center text-5xl absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] bg-white-05 p-4">
             {collection.title}
           </h1>
         </div>
@@ -135,8 +135,10 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
       )}
       <div
         className={cn(
-          { "loading before:bg-white-05 before:z-10": loading },
-          "collection__container container py-20"
+          {
+            "loading before:bg-white-05 before:bg-40 before:z-10": loading,
+          },
+          "collection__container container py-5 md:py-20"
         )}
       >
         <div className="collection__filters grid grid-cols-2 py-6 relative">
@@ -145,7 +147,7 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
           )}
           <SortSelect className="justify-self-end" />
         </div>
-        <div className="collection__products grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+        <div className="collection__products grid grid-cols-2 sm:grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-3 md:gap-x-6 md:gap-y-10">
           {products.map((product) => (
             <ProductCard
               product={product}

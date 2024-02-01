@@ -2,7 +2,7 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     screens: {
-      xsm: "320px",
+      xsm: "375px",
       sm: "480px",
       md: "768px",
       lg: "1024px",
@@ -42,6 +42,9 @@ module.exports = {
         128: "32rem",
         144: "36rem",
       },
+      height: {
+        "filter-container": "calc(100vh - 184px)",
+      },
       borderRadius: {
         "4xl": "2rem",
       },
@@ -59,6 +62,9 @@ module.exports = {
       },
       backgroundImage: {
         ellipse: "url('./assets/images/ellipse.png')",
+      },
+      backgroundSize: {
+        40: "4rem",
       },
       boxShadow: {
         simle: "0px 4px 32px 0px rgba(0, 0, 0, 0.08);",

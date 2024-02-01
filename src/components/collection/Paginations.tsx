@@ -31,7 +31,7 @@ export const Pagination: FunctionalComponent<IPagination> = ({
     }
     setTimeout(() => {
       setLoading(false);
-    }, 300);
+    }, 500);
   };
 
   useEffect(() => {

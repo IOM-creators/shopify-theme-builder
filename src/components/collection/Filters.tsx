@@ -1,7 +1,7 @@
 import { h, FunctionalComponent, Fragment } from "preact";
 import { Button } from "../button";
 import { Icon } from "../icon";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import cn from "classnames";
 import { setFiltersState, setPaginationState } from "../../state/collection";
 import { AccordionItem } from "../accordion/Accordion";
@@ -9,11 +9,18 @@ interface IFilters {
   filters: any[];
 }
 export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
+  const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [filtersData, setFiltersData] = useState<any>([]);
 
-  const handleOpen = () => {
+  const handleFilters = () => {
     setIsOpen(!isOpen);
+  };
+  const handleClearFilters = () => {
+    setFiltersData([]);
+    if (inputRefs.current) {
+      inputRefs.current.forEach((el: any) => (el.checked = false));
+    }
   };
   const removeElementFromArray = (arr, object) => {
     const indexToRemove = arr.findIndex(
@@ -30,6 +37,7 @@ export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
       setFiltersData([...removeElementFromArray(filtersData, filter)]);
     }
   };
+
   useEffect(() => {
     setPaginationState(1);
     setFiltersState(filtersData);
@@ -37,7 +45,14 @@ export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
 
   return (
     <div className="collection__filters">
-      <Button className="flex" onClick={handleOpen}>
+      <div
+        className={cn(
+          { "invisible opacity-0 transition-all": !isOpen },
+          "collection__filters-overlay fixed top-0 left-0 z-10 w-full h-full bg-black-05"
+        )}
+        onClick={handleFilters}
+      ></div>
+      <Button className="flex" onClick={handleFilters}>
         <Icon icon="filter" className="mr-2" />
         Filters
       </Button>
@@ -47,7 +62,7 @@ export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
             "opacity-1 visible translate-x-[0]": isOpen,
             "opacity-0 invisible translate-x-[100%]": !isOpen,
           },
-          "filters__wrapper max-w-sm fixed top-0 right-0 z-10 w-128 h-full bg-white shadow-bottom transition-transform overflow-y-auto"
+          "filters__wrapper max-w-sm fixed top-0 right-0 z-10 w-full h-full bg-white shadow-bottom transition-transform"
         )}
       >
         <div className="filters__header py-10 px-5 text-center relative">
@@ -56,10 +71,10 @@ export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
             icon="close"
             onlyIcon
             className="absolute right-5 top-5"
-            onClick={handleOpen}
+            onClick={handleFilters}
           />
         </div>
-        <div className="filter__container px-5 pb-5">
+        <div className="h-filter-container filter__container px-5 pb-5 overflow-y-auto">
           <form id="filtersData" onChange={handleDataFilters}>
             {filters.map((filter) =>
               filter.type === "LIST" ? (
@@ -79,6 +94,12 @@ export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
                     >
                       <input
                         id={value.label}
+                        ref={(el) =>
+                          inputRefs.current.length !==
+                          filters.reduce((c, a) => c + a.values.length, 0)
+                            ? inputRefs.current.push(el)
+                            : []
+                        }
                         type="checkbox"
                         name={value.label}
                         data-type-filter={value.input}
@@ -100,6 +121,20 @@ export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
               )
             )}
           </form>
+        </div>
+        <div className="filter__footer absolute bottom-0 left-0 w-full bg-white ">
+          <Button
+            className="p-5 underline text-xl w-1/2"
+            onClick={handleClearFilters}
+          >
+            Clear
+          </Button>
+          <Button
+            className="p-5 text-xl underline w-1/2"
+            onClick={handleFilters}
+          >
+            Applay
+          </Button>
         </div>
       </div>
     </div>
