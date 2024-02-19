@@ -67,16 +67,16 @@ export const CartItem: FunctionalComponent<ICartItem> = ({ item }) => {
       <div className="cart__item-quantity flex items-start">
         <Button
           className="px-4"
-          onClick={() => handleUpdateItem(item.lineId, item.quantity + 1)}
+          onClick={() => handleUpdateItem(item.lineId, item.quantity - 1)}
         >
-          +
+          -
         </Button>
         <span className="cart__item-quantity">{item.quantity}</span>
         <Button
           className="px-4"
-          onClick={() => handleUpdateItem(item.lineId, item.quantity - 1)}
+          onClick={() => handleUpdateItem(item.lineId, item.quantity + 1)}
         >
-          -
+          +
         </Button>
         <Button
           icon="delete"

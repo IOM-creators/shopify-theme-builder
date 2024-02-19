@@ -4,7 +4,11 @@ import { Button } from "../button";
 import { useState } from "preact/hooks";
 import cn from "classnames";
 import { addToCart } from "../../storefront/graphql/send-request";
-import { setCartState } from "../../state/cart";
+import {
+  getMiniCartState,
+  setCartState,
+  setMiniCartState,
+} from "../../state/cart";
 
 interface IProductCard {
   product: any;
@@ -19,6 +23,7 @@ export const ProductCard: FunctionalComponent<IProductCard> = ({
   const [isAdded, setAdded] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [cartMiniState] = useState(getMiniCartState);
 
   const handlePopup = async (id) => {
     setLoading(true);
@@ -30,6 +35,7 @@ export const ProductCard: FunctionalComponent<IProductCard> = ({
       setLoading(false);
       setAdded(true);
       setCartState(res.cartLinesAdd);
+      setMiniCartState(!cartMiniState);
     }
   };
 

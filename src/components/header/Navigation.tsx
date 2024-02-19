@@ -1,14 +1,22 @@
 import { h, FunctionalComponent } from "preact";
 import { Icon } from "../icon";
 import { getCart } from "../../storefront/graphql/send-request";
-import { getCartState, subscribeToCartState } from "../../state/cart";
+import {
+  getCartState,
+  getMiniCartState,
+  setMiniCartState,
+  subscribeToCartState,
+  subscribeToMiniCartState,
+} from "../../state/cart";
 import { useEffect, useState } from "preact/hooks";
+import { Button } from "../button";
 interface INavigation {
   menu: any;
 }
 export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
   const [cartState, setLocalCartState] = useState(getCartState);
   const [totalQuantity, setTotalQuantity] = useState(null);
+  const [cartMiniState, setLocalMiniCartState] = useState(getMiniCartState);
 
   useEffect(() => {
     const callback = (newCartState) => {
@@ -21,10 +29,24 @@ export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
   }, []);
 
   useEffect(() => {
+    const callback = (newCartState) => {
+      setLocalMiniCartState(newCartState);
+    };
+    subscribeToMiniCartState(callback);
+    return () => {
+      subscribeToMiniCartState(null);
+    };
+  }, []);
+
+  useEffect(() => {
     getCart().then((res) => {
       setTotalQuantity(res?.cart?.totalQuantity);
     });
   }, [cartState]);
+
+  const handleMinitCart = () => {
+    setMiniCartState(!cartMiniState);
+  };
 
   return (
     <div className="header__wrapper border-b">
@@ -54,10 +76,10 @@ export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
           <button className="p-2">
             <Icon icon="account" />
           </button>
-          <a href="/cart" className="p-2 inline-flex">
+          <Button onClick={handleMinitCart} className="p-2 inline-flex">
             <Icon icon="cart" />
             {totalQuantity && <span>{totalQuantity}</span>}
-          </a>
+          </Button>
         </div>
       </div>
     </div>

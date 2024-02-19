@@ -8,6 +8,7 @@ module.exports = {
       lg: "1024px",
       lap: "1280px",
       xl: "1440px",
+      xxl: "1920px",
     },
     colors: {
       disabled: "#b6b6b6",

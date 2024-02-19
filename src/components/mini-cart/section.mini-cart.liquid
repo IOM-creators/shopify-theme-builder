@@ -1,0 +1,21 @@
+<section id="miniCart" data-section="mini-cart">
+  <script type="application/json" data-section-data>
+    {
+       "cart": {{cart | json}},
+       "title": "{{section.settings.title}}"
+    }
+  </script>
+</section>
+{% schema %}
+  {
+    "name": "Mini Cart",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Title"
+      }
+    ]
+  }
+{% endschema %}

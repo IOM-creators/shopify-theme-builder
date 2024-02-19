@@ -9,7 +9,8 @@ import {
 import { useEffect, useState } from "preact/hooks";
 
 export const CartItems = () => {
-  const [cartState, setLocalCartState] = useState(getCartState);
+  const [cart, setLocalCartState] = useState(getCartState);
+  const [cartState, setCart] = useState(null);
 
   useEffect(() => {
     const callback = (newCartState) => {
@@ -24,8 +25,9 @@ export const CartItems = () => {
   useEffect(() => {
     getCart().then((res) => {
       setCartState(res);
+      setCart(res);
     });
-  }, []);
+  }, [cartState]);
 
   if (!cartState?.cart) return null;
   const cartItems = cartState.cart.lines.nodes.map((node) => ({
