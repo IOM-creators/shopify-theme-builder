@@ -2,6 +2,7 @@ import * as queries from "./queries";
 
 import Storefront from "..";
 import { getCookie } from "../../helpers/get-cookie";
+import { setCookie } from "../../helpers/set-cookie";
 
 const storefront = Storefront.getInstance();
 
@@ -12,7 +13,7 @@ export const getCart = async () => {
     const response = await storefront.request({
       query: queries.getCart,
       variables: {
-        id: `gid://shopify/Cart/${cartToken}`,
+        id: cartToken,
       },
     });
     return response.data;
@@ -23,16 +24,36 @@ export const getCart = async () => {
 export const addToCart = async (productId) => {
   try {
     const cartToken = getCookie("cart");
-    if (!cartToken) return null;
-    const response = await storefront.request({
-      query: queries.addToCart,
-      variables: {
-        cartId: `gid://shopify/Cart/${cartToken}`,
-        merchandiseId: productId,
-        quantity: 1,
-      },
-    });
-    return response.data;
+    if (cartToken) {
+      const response = await storefront.request({
+        query: queries.addToCart,
+        variables: {
+          cartId: !cartToken ? dataCart.cartCreate.cart.id : cartToken,
+          merchandiseId: productId,
+          quantity: 1,
+        },
+      });
+      return response.data;
+    } else {
+      const responseCart = await storefront.request({
+        query: queries.cartCreate,
+        variables: {
+          input: {
+            lines: [
+              {
+                merchandiseId: productId,
+                quantity: 1,
+              },
+            ],
+          },
+        },
+      });
+      const dataCart = await responseCart.data;
+      setCookie("cart", dataCart.cartCreate.cart.id);
+      return {
+        cartLinesAdd: dataCart.cartCreate,
+      };
+    }
   } catch (error) {
     console.log("error", error);
   }
@@ -44,7 +65,7 @@ export const removeFromCart = async (lineIds) => {
     const response = await storefront.request({
       query: queries.removeFromCart,
       variables: {
-        cartId: `gid://shopify/Cart/${cartToken}`,
+        cartId: cartToken,
         lineIds: [lineIds],
       },
     });
@@ -60,7 +81,7 @@ export const updateCartItem = async (lineId, quantity) => {
     const response = await storefront.request({
       query: queries.updateCartItem,
       variables: {
-        cartId: `gid://shopify/Cart/${cartToken}`,
+        cartId: cartToken,
         lineId,
         quantity,
       },

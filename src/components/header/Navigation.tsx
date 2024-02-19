@@ -22,7 +22,7 @@ export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
 
   useEffect(() => {
     getCart().then((res) => {
-      setTotalQuantity(res.cart.totalQuantity);
+      setTotalQuantity(res?.cart?.totalQuantity);
     });
   }, [cartState]);
 

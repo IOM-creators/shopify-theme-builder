@@ -19,6 +19,26 @@ export const cartCreate = `
     cartCreate(input: $input) {
       cart {
         id
+        totalQuantity
+        lines(first: 10) {
+          nodes {
+            quantity
+            ... on CartLine {
+              id
+              cost {
+                totalAmount {
+                  amount
+                  currencyCode
+                }
+              }
+              merchandise {
+                ... on ProductVariant {
+                  ${fragments.productVariant}
+                }
+              }
+            }
+          }
+        }
       }
       userErrors {
         field
