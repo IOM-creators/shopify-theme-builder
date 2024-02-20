@@ -28,6 +28,8 @@ export const ProductCard: FunctionalComponent<IProductCard> = ({
   const handlePopup = async (id) => {
     setLoading(true);
     const res = await addToCart(id);
+    console.log("res", res);
+
     if (res.cartLinesAdd.userErrors.length) {
       setLoading(false);
       setErrorMessage(res.cartLinesAdd.userErrors[0].message);

@@ -41,7 +41,10 @@ export const CartItems = () => {
         {cartItems.length ? (
           <div className="cart__items grid grid-cols-1 gap-10">
             {cartItems.map((item: any) => (
-              <CartItem item={item} />
+              <CartItem
+                item={item}
+                className="grid grid-cols-cart-items gap-10"
+              />
             ))}
           </div>
         ) : (

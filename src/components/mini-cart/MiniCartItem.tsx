@@ -10,7 +10,7 @@ import {
 import { setCartState } from "../../state/cart";
 import { useState } from "preact/hooks";
 
-interface ICartItem {
+interface IMiniCartItem {
   item: {
     lineId: string;
     quantity: number;
@@ -36,7 +36,7 @@ interface ICartItem {
   className?: string;
 }
 
-export const CartItem: FunctionalComponent<ICartItem> = ({
+export const MiniCartItem: FunctionalComponent<IMiniCartItem> = ({
   item,
   className,
 }) => {
@@ -65,25 +65,33 @@ export const CartItem: FunctionalComponent<ICartItem> = ({
       <div className="cart__item-image">
         {item.image && <Image image={item.image} />}
       </div>
-      <h3 className="cart__item-title">{item.product.title}</h3>
-      <span className="cart__item-price">
-        {item.price.amount}
-        {item.price.currencyCode}
-      </span>
-      <div className="cart__item-quantity flex items-start">
-        <Button
-          className="px-4"
-          onClick={() => handleUpdateItem(item.lineId, item.quantity - 1)}
-        >
-          -
-        </Button>
-        <span className="cart__item-quantity">{item.quantity}</span>
-        <Button
-          className="px-4"
-          onClick={() => handleUpdateItem(item.lineId, item.quantity + 1)}
-        >
-          +
-        </Button>
+      <div className="grid">
+        <h3 className="cart__item-title">{item.product.title}</h3>
+        <span className="cart__item-price">
+          {item.price.amount}
+          {item.price.currencyCode}
+        </span>
+        <div className="cart__item-quantity flex items-start">
+          <Button
+            className="px-4"
+            onClick={() => handleUpdateItem(item.lineId, item.quantity - 1)}
+          >
+            -
+          </Button>
+          <span className="cart__item-quantity">{item.quantity}</span>
+          <Button
+            className="px-4"
+            onClick={() => handleUpdateItem(item.lineId, item.quantity + 1)}
+          >
+            +
+          </Button>
+        </div>
+      </div>
+      <div className="grid justify-items-end">
+        <span className="cart__item-price">
+          {item.cost.totalAmount.amount}
+          {item.cost.totalAmount.currencyCode}
+        </span>
         <Button
           icon="delete"
           onlyIcon
@@ -92,10 +100,6 @@ export const CartItem: FunctionalComponent<ICartItem> = ({
           onClick={() => handleRemoveItem(item.lineId)}
         />
       </div>
-      <span className="cart__item-price">
-        {item.cost.totalAmount.amount}
-        {item.cost.totalAmount.currencyCode}
-      </span>
     </div>
   );
 };

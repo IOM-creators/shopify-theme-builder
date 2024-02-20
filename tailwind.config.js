@@ -44,7 +44,7 @@ module.exports = {
         144: "36rem",
       },
       height: {
-        "filter-container": "calc(100vh - 184px)",
+        "filter-container": "calc(100vh - 164px)",
       },
       borderRadius: {
         "4xl": "2rem",
@@ -74,6 +74,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         "cart-items": "100px repeat(4, minmax(0, 1fr))",
+        "mini-cart-items": "100px repeat(2, minmax(0, 1fr))",
       },
     },
     container: {

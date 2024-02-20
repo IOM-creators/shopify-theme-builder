@@ -52,6 +52,7 @@ export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
         )}
         onClick={handleFilters}
       ></div>
+
       <Button className="flex" onClick={handleFilters}>
         <Icon icon="filter" className="mr-2" />
         Filters
@@ -65,16 +66,16 @@ export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
           "filters__wrapper max-w-sm fixed top-0 right-0 z-10 w-full h-full bg-white shadow-bottom transition-transform"
         )}
       >
-        <div className="filters__header py-10 px-5 text-center relative">
-          <h2 className="text-3xl">Filters</h2>
+        <div className="filters__header flex items-center justify-center p-5  text-center relative shadow-simle">
+          <h2 className="text-2xl">Filters</h2>
           <Button
             icon="close"
             onlyIcon
-            className="absolute right-5 top-5"
+            className="absolute right-5"
             onClick={handleFilters}
           />
         </div>
-        <div className="h-filter-container filter__container px-5 pb-5 overflow-y-auto">
+        <div className="h-filter-container filter__container py-10 px-5 overflow-y-auto">
           <form id="filtersData" onChange={handleDataFilters}>
             {filters.map((filter) =>
               filter.type === "LIST" ? (
@@ -122,15 +123,15 @@ export const Filters: FunctionalComponent<IFilters> = ({ filters }) => {
             )}
           </form>
         </div>
-        <div className="filter__footer absolute bottom-0 left-0 w-full bg-white ">
+        <div className="filter__footer absolute bottom-0 left-0 w-full p-4 bg-white shadow-simle">
           <Button
-            className="p-5 underline text-xl w-1/2"
+            className="p-4 underline text-xl w-1/2"
             onClick={handleClearFilters}
           >
             Clear
           </Button>
           <Button
-            className="p-5 text-xl underline w-1/2"
+            className="p-4 text-xl underline w-1/2"
             onClick={handleFilters}
           >
             Applay

@@ -28,7 +28,7 @@ export const addToCart = async (productId) => {
       const response = await storefront.request({
         query: queries.addToCart,
         variables: {
-          cartId: !cartToken ? dataCart.cartCreate.cart.id : cartToken,
+          cartId: cartToken,
           merchandiseId: productId,
           quantity: 1,
         },
