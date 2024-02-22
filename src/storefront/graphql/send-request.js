@@ -28,7 +28,9 @@ export const addToCart = async (productId) => {
       const response = await storefront.request({
         query: queries.addToCart,
         variables: {
-          cartId: cartToken,
+          cartId: cartToken.includes("gid")
+            ? cartToken
+            : `gid://shopify/Cart/${cartToken}`,
           merchandiseId: productId,
           quantity: 1,
         },
