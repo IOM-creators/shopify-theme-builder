@@ -1,10 +1,6 @@
-import { h, render } from "preact";
+import { h } from "preact";
 import { Navigation } from "./Navigation";
 
-export const Header = ({ data }) => {
-  return (
-    <header>
-      <Navigation menu={data.menu} />
-    </header>
-  );
+export const Header = ({ data, element }) => {
+  return <Navigation data={data} />;
 };

@@ -48,12 +48,13 @@
   <body>
 
     {% section 'header' %}
-      {% comment %} {{ content_for_layout }} {% endcomment %}
     {% render 'main', content: content_for_layout %}
     {% section 'footer' %}
     {% section 'mini-cart' %}
 
     {% render 'storefront' %}
     {% section 'popup' %}
+      {% comment %} {{ content_for_layout }} {% endcomment %}
+
   </body>
 </html>

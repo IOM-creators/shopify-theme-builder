@@ -19,9 +19,11 @@ export const ProductCard: FunctionalComponent<IProductCard> = ({
   const [isAdded, setAdded] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const { globalState, setMiniCart, setCart } = useGlobalState();
+  const { globalState, setMiniCart, setCart, setPopupState } = useGlobalState();
 
   const handlePopup = async (id) => {
+    //Quick view popup
+    // setPopupState({ state: true, title: "Hello", content: <div>Content</div> });
     setLoading(true);
     const res = await addToCart(id);
     if (res.cartLinesAdd.userErrors.length) {

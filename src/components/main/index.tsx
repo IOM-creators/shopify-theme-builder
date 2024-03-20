@@ -1,4 +1,4 @@
-import { Fragment, h, render } from "preact";
+import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
 export const Main = ({ data, element }) => {

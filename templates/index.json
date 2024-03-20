@@ -1,4 +1,20 @@
 {
-  "sections": {},
-  "order": []
+  "sections": {
+    "slider_YU6rmy": {
+      "type": "slider",
+      "settings": {
+        "collection": "dresses"
+      }
+    },
+    "slider_jrrdFd": {
+      "type": "slider",
+      "settings": {
+        "collection": "frontpage"
+      }
+    }
+  },
+  "order": [
+    "slider_YU6rmy",
+    "slider_jrrdFd"
+  ]
 }

@@ -1,10 +1,6 @@
-import { h, render } from "preact";
+import { h } from "preact";
 import { MainProduct } from "./MainProduct";
 
-export default (element, data) => {
-  // return <MainProduct data={data} />;
-  const init = () => {
-    render(<MainProduct data={data} />, element);
-  };
-  init();
+export default (data, element) => {
+  return <MainProduct data={data} />;
 };

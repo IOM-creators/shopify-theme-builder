@@ -5,17 +5,12 @@ import { Header } from "./components/header";
 import { Main } from "./components/main";
 import { Footer } from "./components/footer";
 import { MiniCart } from "./components/mini-cart";
+import { Popup } from "./components/popup";
 
 function initProject() {
-  const uniq = (value, index, self) => self.indexOf(value) === index;
-  const sections: any = document.querySelectorAll("[data-section]");
-  const sectionNames = [...sections]
-    .map((section) => section.dataset.section)
-    .filter(uniq);
-
   const getData = (id) => {
     const element = document.querySelector(`[data-section="${id}"]`);
-    const dataEl = element.querySelector("[data-section-data]");
+    const dataEl = element && element.querySelector("[data-section-data]");
     const data = dataEl ? JSON.parse(dataEl.textContent) : {};
     return {
       data,
@@ -27,15 +22,17 @@ function initProject() {
     <GlobalStateProvider>
       <Header {...getData("header")} />
       <Main {...getData("main")} />
-      <Footer {...getData("footer")} />
       <MiniCart {...getData("mini-cart")} />
+      <Popup {...getData("mini-cart")} />
+      <Footer {...getData("footer")} />
     </GlobalStateProvider>,
     document.body
   );
 }
 
-document.addEventListener("DOMContentLoaded", initProject);
-
 if (window?.Shopify && window.Shopify.designMode) {
+  window.addEventListener("shopify:inspector:activate", initProject);
   window.addEventListener("shopify:section:load", initProject);
+} else {
+  document.addEventListener("DOMContentLoaded", initProject);
 }

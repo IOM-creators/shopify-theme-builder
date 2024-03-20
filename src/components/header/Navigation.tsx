@@ -3,18 +3,20 @@ import { Icon } from "../icon";
 import { Button } from "../button";
 import { useGlobalState } from "../../GlobalStateContext";
 interface INavigation {
-  menu: any;
+  data: any;
 }
-export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
+export const Navigation: FunctionalComponent<INavigation> = ({ data }) => {
   const { globalState, setMiniCart } = useGlobalState();
 
   const handleMinitCart = () => {
     setMiniCart(!globalState.miniCart);
-    console.log("globalState", globalState);
   };
 
   return (
-    <div className="header__wrapper border-b">
+    <div
+      id={data.sectionId}
+      className="header__wrapper border-b shopify-section"
+    >
       <div className="header__container flex items-center justify-between container py-4">
         <div className="header__logo">
           <a href="/">
@@ -24,13 +26,14 @@ export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
         <div className="header__navigation">
           <nav>
             <ul className="flex">
-              {menu.map((item: any) => (
-                <li>
-                  <a href={item.url} className="py-4 px-6">
-                    {item.title}
-                  </a>
-                </li>
-              ))}
+              {data?.menu &&
+                data.menu.map((item: any) => (
+                  <li>
+                    <a href={item.url} className="py-4 px-6">
+                      {item.title}
+                    </a>
+                  </li>
+                ))}
             </ul>
           </nav>
         </div>
@@ -43,7 +46,9 @@ export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
           </button>
           <Button onClick={handleMinitCart} className="p-2 inline-flex">
             <Icon icon="cart" />
-            {globalState.cart && <span>{globalState.cart.totalQuantity}</span>}
+            {globalState.cart?.totalQuantity && (
+              <span>{globalState.cart.totalQuantity}</span>
+            )}
           </Button>
         </div>
       </div>

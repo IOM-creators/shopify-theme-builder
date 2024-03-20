@@ -11,7 +11,7 @@ export const MiniCartItems = ({ data }) => {
 
   useEffect(() => {
     getCart().then((res) => {
-      setCart({ ...res.cart });
+      if (res) setCart({ ...res.cart });
     });
   }, []);
 
@@ -19,9 +19,9 @@ export const MiniCartItems = ({ data }) => {
     setMiniCart(!globalState.miniCart);
   };
 
-  if (!globalState.cart) return null;
+  if (!globalState.cart?.lines) return null;
 
-  const cartItems = globalState.cart?.lines?.nodes?.map((node) => ({
+  const cartItems = globalState.cart.lines.nodes.map((node) => ({
     lineId: node.id,
     ...node,
     ...node.merchandise,

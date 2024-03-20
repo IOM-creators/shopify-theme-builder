@@ -1,11 +1,14 @@
 import { h, FunctionalComponent } from "preact";
 import { Icon } from "../icon";
 interface INavigation {
-  menu: any;
+  data: any;
 }
-export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
+export const Navigation: FunctionalComponent<INavigation> = ({ data }) => {
   return (
-    <div className="footer__wrapper border-t">
+    <div
+      id={data.sectionId}
+      className="footer__wrapper border-t shopify-section"
+    >
       <div className="footer__container flex items-center justify-center container py-4">
         {/* <div className="footer__logo">
           <Icon icon="logo" />
@@ -13,13 +16,14 @@ export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
         <div className="footer__navigartion">
           <nav>
             <ul className="flex">
-              {menu.map((item: any) => (
-                <li>
-                  <a href={item.url} className="py-4 px-6">
-                    {item.title}
-                  </a>
-                </li>
-              ))}
+              {data?.menu &&
+                data.menu.map((item: any) => (
+                  <li>
+                    <a href={item.url} className="py-4 px-6">
+                      {item.title}
+                    </a>
+                  </li>
+                ))}
             </ul>
           </nav>
         </div>

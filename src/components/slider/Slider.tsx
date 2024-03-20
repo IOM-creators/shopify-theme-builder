@@ -26,7 +26,7 @@ interface ISlider {
 export const Slider: FunctionalComponent<ISlider> = ({ params, children }) => {
   const swiperContainer = useSwiper(params);
   return (
-    <div>
+    <div className="slider">
       <div ref={swiperContainer} className="swiper-container">
         <div className="swiper-wrapper">{children}</div>
       </div>

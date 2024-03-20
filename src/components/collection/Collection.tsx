@@ -11,54 +11,53 @@ import { Filters } from "./Filters";
 import { Pagination } from "./Paginations";
 import { useGlobalState } from "../../GlobalStateContext";
 interface ICollection {
-  settings?: any;
+  data: any;
 }
-export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
+export const Collection: FunctionalComponent<ICollection> = ({ data }) => {
   const [products, setProducts] = useState([]);
-  const [numbersPagination] = useState(settings.type_pagination === "numbers");
+  const [numbersPagination] = useState(data.type_pagination === "numbers");
   const [showPagination, setShowPagination] = useState(false);
   const [loading, setLoading] = useState(false);
   const { globalState, setCollection } = useGlobalState();
 
   useEffect(() => {
     setLoading(true);
-    getCollection(settings.handle, settings.porudcts_per_page * 1).then(
-      (res) => {
-        setCollection({ ...res.collection });
-        console.log("globalState", globalState);
+    getCollection(data.handle, data.porudcts_per_page * 1).then((res) => {
+      setCollection({ ...res.collection });
+      console.log("globalState", globalState);
 
-        numbersPagination
-          ? setShowPagination(numbersPagination)
-          : setShowPagination(res.collection.products.pageInfo.hasNextPage);
+      numbersPagination
+        ? setShowPagination(numbersPagination)
+        : setShowPagination(res.collection.products.pageInfo.hasNextPage);
 
-        if (numbersPagination) {
-          if (1 > 1) {
-            setProducts(
-              res.collection.products.nodes.filter(
-                (p, ind) => ind + 1 > settings.porudcts_per_page * (1 - 1)
-              )
-            );
-          } else {
-            setProducts(
-              res.collection.products.nodes.filter(
-                (p, ind) => ind < settings.porudcts_per_page * 1
-              )
-            );
-          }
+      if (numbersPagination) {
+        if (1 > 1) {
+          setProducts(
+            res.collection.products.nodes.filter(
+              (p, ind) => ind + 1 > data.porudcts_per_page * (1 - 1)
+            )
+          );
         } else {
-          setProducts(res.collection.products.nodes);
+          setProducts(
+            res.collection.products.nodes.filter(
+              (p, ind) => ind < data.porudcts_per_page * 1
+            )
+          );
         }
-        setLoading(false);
+      } else {
+        setProducts(res.collection.products.nodes);
       }
-    );
+      setLoading(false);
+    });
   }, []);
 
-  if (!globalState.collection) return <div>Empty</div>;
+  if (!globalState.collection)
+    return <div className="loading !absolute w-full h-full"></div>;
 
   const collection = globalState.collection;
   return (
-    <div className="collection">
-      {settings.banner ? (
+    <div id={data.sectionId} className="collection shopify-section">
+      {data.banner ? (
         <div className="collection__banner relative">
           {collection.image && (
             <Image image={collection.image} className="md:before:pt-[30%]" />
@@ -95,16 +94,16 @@ export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
           {products.map((product) => (
             <ProductCard
               product={product}
-              isAddBtn={settings.is_add_btn}
-              isDescription={settings.is_description}
+              isAddBtn={data.is_add_btn}
+              isDescription={data.is_description}
             />
           ))}
         </div>
         {showPagination && (
           <Pagination
-            productsCount={settings.all_products_count}
-            perPage={settings.porudcts_per_page}
-            typePagination={settings.type_pagination}
+            productsCount={data.all_products_count}
+            perPage={data.porudcts_per_page}
+            typePagination={data.type_pagination}
           />
         )}
       </div>
