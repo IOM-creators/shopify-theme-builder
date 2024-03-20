@@ -1,4 +1,10 @@
 import "./index.scss";
+import { h, render } from "preact";
+import { GlobalStateProvider } from "./GlobalStateContext";
+import { Header } from "./components/header";
+import { Main } from "./components/main";
+import { Footer } from "./components/footer";
+import { MiniCart } from "./components/mini-cart";
 
 function initProject() {
   const uniq = (value, index, self) => self.indexOf(value) === index;
@@ -7,28 +13,29 @@ function initProject() {
     .map((section) => section.dataset.section)
     .filter(uniq);
 
-  sectionNames.forEach((name) => {
-    import(/* webpackChunkName: "[request]" */ `./components/${name}/index.tsx`)
-      .then((m) => {
-        const module = m.default;
-        const modules = [...sections].filter(
-          (section) => section.dataset.section === name
-        );
-        modules.forEach((element) => {
-          const dataEl = element.querySelector("[data-section-data]");
-          const data = dataEl ? JSON.parse(dataEl.textContent) : {};
-          module(element, { ...data });
-        });
-      })
-      .catch(console.error);
-  });
+  const getData = (id) => {
+    const element = document.querySelector(`[data-section="${id}"]`);
+    const dataEl = element.querySelector("[data-section-data]");
+    const data = dataEl ? JSON.parse(dataEl.textContent) : {};
+    return {
+      data,
+      element,
+    };
+  };
+
+  render(
+    <GlobalStateProvider>
+      <Header {...getData("header")} />
+      <Main {...getData("main")} />
+      <Footer {...getData("footer")} />
+      <MiniCart {...getData("mini-cart")} />
+    </GlobalStateProvider>,
+    document.body
+  );
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  initProject();
-});
+document.addEventListener("DOMContentLoaded", initProject);
+
 if (window?.Shopify && window.Shopify.designMode) {
-  window.addEventListener("shopify:section:load", () => {
-    initProject();
-  });
+  window.addEventListener("shopify:section:load", initProject);
 }

@@ -2,7 +2,7 @@ import { h, FunctionalComponent } from "preact";
 import cn from "classnames";
 import { useEffect, useState } from "preact/hooks";
 import { Button } from "../button";
-import { setPaginationState } from "../../state/collection";
+import { setPaginationState } from "../../store/collection";
 
 interface IPagination {
   productsCount: number;

@@ -48,18 +48,12 @@
   <body>
 
     {% section 'header' %}
-
-    <main
-      id="MainContent"
-      class="content-for-layout focus-none"
-      role="main"
-      tabindex="-1">
-      {{ content_for_layout }}
-    </main>
+      {% comment %} {{ content_for_layout }} {% endcomment %}
+    {% render 'main', content: content_for_layout %}
+    {% section 'footer' %}
+    {% section 'mini-cart' %}
 
     {% render 'storefront' %}
     {% section 'popup' %}
-    {% section 'mini-cart' %}
-    {% section 'footer' %}
   </body>
 </html>

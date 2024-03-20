@@ -3,14 +3,19 @@ import cn from "classnames";
 
 interface IImage {
   className?: string;
-  image: {
+  imageSopify?: string;
+  image?: {
     src: string;
     altText: string;
   };
 }
-export const Image: FunctionalComponent<IImage> = ({ className, image }) => {
+export const Image: FunctionalComponent<IImage> = ({
+  className,
+  imageSopify,
+  image = { src: "", altText: "" },
+}) => {
   const calculateSrcset = () => {
-    const src = image.src;
+    const src = imageSopify || image.src;
     const smallSrc = `${src.replace(/\.\w+$/, "-small$&") + "&width=300"} 300w`;
     const mediumSrc = `${
       src.replace(/\.\w+$/, "-medium$&") + "&width=600"

@@ -1,51 +1,16 @@
 import { h, FunctionalComponent } from "preact";
 import { Icon } from "../icon";
-import { getCart } from "../../storefront/graphql/send-request";
-import {
-  getCartState,
-  getMiniCartState,
-  setMiniCartState,
-  subscribeToCartState,
-  subscribeToMiniCartState,
-} from "../../state/cart";
-import { useEffect, useState } from "preact/hooks";
 import { Button } from "../button";
+import { useGlobalState } from "../../GlobalStateContext";
 interface INavigation {
   menu: any;
 }
 export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
-  const [cartState, setLocalCartState] = useState(getCartState);
-  const [totalQuantity, setTotalQuantity] = useState(null);
-  const [cartMiniState, setLocalMiniCartState] = useState(getMiniCartState);
-
-  useEffect(() => {
-    const callback = (newCartState) => {
-      setLocalCartState(newCartState);
-    };
-    subscribeToCartState(callback);
-    return () => {
-      subscribeToCartState(null);
-    };
-  }, []);
-
-  useEffect(() => {
-    const callback = (newCartState) => {
-      setLocalMiniCartState(newCartState);
-    };
-    subscribeToMiniCartState(callback);
-    return () => {
-      subscribeToMiniCartState(null);
-    };
-  }, []);
-
-  useEffect(() => {
-    getCart().then((res) => {
-      setTotalQuantity(res?.cart?.totalQuantity);
-    });
-  }, [cartState]);
+  const { globalState, setMiniCart } = useGlobalState();
 
   const handleMinitCart = () => {
-    setMiniCartState(!cartMiniState);
+    setMiniCart(!globalState.miniCart);
+    console.log("globalState", globalState);
   };
 
   return (
@@ -78,7 +43,7 @@ export const Navigation: FunctionalComponent<INavigation> = ({ menu }) => {
           </button>
           <Button onClick={handleMinitCart} className="p-2 inline-flex">
             <Icon icon="cart" />
-            {totalQuantity && <span>{totalQuantity}</span>}
+            {globalState.cart && <span>{globalState.cart.totalQuantity}</span>}
           </Button>
         </div>
       </div>

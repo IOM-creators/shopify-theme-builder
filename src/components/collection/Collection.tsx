@@ -3,115 +3,59 @@ import cn from "classnames";
 
 import { ProductCard } from "../product/ProductCard";
 import { getCollection } from "../../storefront/graphql/send-request";
-import {
-  getCollectionState,
-  setCollectionState,
-  subscribeToCollectionState,
-  getFiltersState,
-  subscribeToFiltersState,
-  subscribeToSortState,
-  getSortState,
-  subscribeToPaginationState,
-  getPaginationState,
-} from "../../state/collection";
+
 import { Image } from "../image";
 import { SortSelect } from "./SortSelect";
 import { useEffect, useState } from "preact/hooks";
 import { Filters } from "./Filters";
 import { Pagination } from "./Paginations";
+import { useGlobalState } from "../../GlobalStateContext";
 interface ICollection {
   settings?: any;
 }
 export const Collection: FunctionalComponent<ICollection> = ({ settings }) => {
-  const [collectionState, setLocalCollectionState] =
-    useState(getCollectionState);
-  const [filtersState, setLocalFiltersState] = useState(getFiltersState);
-  const [sortState, setLocalSortState] = useState(getSortState);
-  const [paginationState, setLocalPaginationState] =
-    useState(getPaginationState);
   const [products, setProducts] = useState([]);
   const [numbersPagination] = useState(settings.type_pagination === "numbers");
   const [showPagination, setShowPagination] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const callback = (newCollectionState) => {
-      setLocalCollectionState(newCollectionState);
-    };
-    subscribeToCollectionState(callback);
-    return () => {
-      subscribeToCollectionState(null);
-    };
-  }, []);
-
-  useEffect(() => {
-    const callback = (newFiltersState) => {
-      setLocalFiltersState(newFiltersState);
-    };
-    subscribeToFiltersState(callback);
-    return () => {
-      subscribeToFiltersState(null);
-    };
-  }, []);
-
-  useEffect(() => {
-    const callback = (newPaginationState) => {
-      setLocalPaginationState(newPaginationState);
-    };
-    subscribeToPaginationState(callback);
-    return () => {
-      subscribeToPaginationState(null);
-    };
-  }, []);
-
-  useEffect(() => {
-    const callback = (newSortState) => {
-      setLocalSortState(newSortState);
-    };
-    subscribeToSortState(callback);
-    return () => {
-      subscribeToSortState(null);
-    };
-  }, []);
+  const { globalState, setCollection } = useGlobalState();
 
   useEffect(() => {
     setLoading(true);
-    getCollection(
-      settings.handle,
-      settings.porudcts_per_page * paginationState,
-      filtersState,
-      sortState
-    ).then((res) => {
-      setCollectionState(res);
-      numbersPagination
-        ? setShowPagination(numbersPagination)
-        : setShowPagination(res.collection.products.pageInfo.hasNextPage);
+    getCollection(settings.handle, settings.porudcts_per_page * 1).then(
+      (res) => {
+        setCollection({ ...res.collection });
+        console.log("globalState", globalState);
 
-      if (numbersPagination) {
-        if (paginationState > 1) {
-          setProducts(
-            res.collection.products.nodes.filter(
-              (p, ind) =>
-                ind + 1 > settings.porudcts_per_page * (paginationState - 1)
-            )
-          );
+        numbersPagination
+          ? setShowPagination(numbersPagination)
+          : setShowPagination(res.collection.products.pageInfo.hasNextPage);
+
+        if (numbersPagination) {
+          if (1 > 1) {
+            setProducts(
+              res.collection.products.nodes.filter(
+                (p, ind) => ind + 1 > settings.porudcts_per_page * (1 - 1)
+              )
+            );
+          } else {
+            setProducts(
+              res.collection.products.nodes.filter(
+                (p, ind) => ind < settings.porudcts_per_page * 1
+              )
+            );
+          }
         } else {
-          setProducts(
-            res.collection.products.nodes.filter(
-              (p, ind) => ind < settings.porudcts_per_page * paginationState
-            )
-          );
+          setProducts(res.collection.products.nodes);
         }
-      } else {
-        setProducts(res.collection.products.nodes);
+        setLoading(false);
       }
-      setLoading(false);
-    });
-  }, [filtersState, sortState, paginationState]);
+    );
+  }, []);
 
-  if (!collectionState?.collection) return null;
+  if (!globalState.collection) return <div>Empty</div>;
 
-  const collection = collectionState.collection;
+  const collection = globalState.collection;
   return (
     <div className="collection">
       {settings.banner ? (

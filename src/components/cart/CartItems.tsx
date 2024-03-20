@@ -1,36 +1,22 @@
 import { h } from "preact";
 import { getCart } from "../../storefront/graphql/send-request";
 import { CartItem } from "./CartItem";
-import {
-  subscribeToCartState,
-  getCartState,
-  setCartState,
-} from "../../state/cart";
 import { useEffect, useState } from "preact/hooks";
+import { useGlobalState } from "../../GlobalStateContext";
 
 export const CartItems = () => {
-  const [cart, setLocalCartState] = useState(getCartState);
-  const [cartState, setCart] = useState(null);
+  const { globalState, setCart } = useGlobalState();
 
   useEffect(() => {
-    const callback = (newCartState) => {
-      setLocalCartState(newCartState);
-    };
-    subscribeToCartState(callback);
-    return () => {
-      subscribeToCartState(null);
-    };
+    console.log("globalState", globalState);
+
+    getCart().then((res) => {
+      setCart({ ...res.cart });
+    });
   }, []);
 
-  useEffect(() => {
-    getCart().then((res) => {
-      setCartState(res);
-      setCart(res);
-    });
-  }, [cartState]);
-
-  if (!cartState?.cart) return null;
-  const cartItems = cartState.cart.lines.nodes.map((node) => ({
+  if (!globalState.cart) return null;
+  const cartItems = globalState.cart.lines.nodes.map((node) => ({
     lineId: node.id,
     ...node,
     ...node.merchandise,

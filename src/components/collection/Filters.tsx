@@ -3,7 +3,7 @@ import { Button } from "../button";
 import { Icon } from "../icon";
 import { useEffect, useRef, useState } from "preact/hooks";
 import cn from "classnames";
-import { setFiltersState, setPaginationState } from "../../state/collection";
+import { setFiltersState, setPaginationState } from "../../store/collection";
 import { AccordionItem } from "../accordion/Accordion";
 interface IFilters {
   filters: any[];

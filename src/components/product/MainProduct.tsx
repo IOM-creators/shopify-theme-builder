@@ -5,7 +5,6 @@ interface IMainProduct {
   data: any;
 }
 export const MainProduct: FunctionalComponent<IMainProduct> = ({ data }) => {
-  console.log("product", data);
   return (
     <div className="main-product p-4">
       <ProductCard product={data.product} />

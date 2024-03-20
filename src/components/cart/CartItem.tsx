@@ -7,8 +7,9 @@ import {
   removeFromCart,
   updateCartItem,
 } from "../../storefront/graphql/send-request";
-import { setCartState } from "../../state/cart";
+import { setCartState } from "../../store/cart";
 import { useState } from "preact/hooks";
+import { useGlobalState } from "../../GlobalStateContext";
 
 interface ICartItem {
   item: {
@@ -41,12 +42,13 @@ export const CartItem: FunctionalComponent<ICartItem> = ({
   className,
 }) => {
   const [isLoading, setLoading] = useState(false);
+  const { setCart } = useGlobalState();
 
   const handleRemoveItem = async (id) => {
     setLoading(true);
     const res = await removeFromCart(id);
     if (res.cartLinesRemove) {
-      setCartState(res.cartLinesRemove);
+      setCart({ ...res.cartLinesRemove.cart });
       setLoading(false);
     }
   };
@@ -55,7 +57,7 @@ export const CartItem: FunctionalComponent<ICartItem> = ({
     setLoading(true);
     const res = await updateCartItem(id, quantity);
     if (res.cartLinesUpdate) {
-      setCartState(res.cartLinesUpdate);
+      setCart({ ...res.cartLinesUpdate.cart });
       setLoading(false);
     }
   };

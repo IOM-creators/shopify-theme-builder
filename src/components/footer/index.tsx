@@ -1,9 +1,10 @@
 import { h, render } from "preact";
 import { Navigation } from "./Navigation";
 
-export default (element, data) => {
-  const init = () => {
-    render(<Navigation menu={data.menu} />, element);
-  };
-  init();
+export const Footer = ({ data }) => {
+  return (
+    <footer>
+      <Navigation menu={data.menu} />
+    </footer>
+  );
 };

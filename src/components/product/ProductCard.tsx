@@ -4,11 +4,7 @@ import { Button } from "../button";
 import { useState } from "preact/hooks";
 import cn from "classnames";
 import { addToCart } from "../../storefront/graphql/send-request";
-import {
-  getMiniCartState,
-  setCartState,
-  setMiniCartState,
-} from "../../state/cart";
+import { useGlobalState } from "../../GlobalStateContext";
 
 interface IProductCard {
   product: any;
@@ -23,21 +19,19 @@ export const ProductCard: FunctionalComponent<IProductCard> = ({
   const [isAdded, setAdded] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [cartMiniState] = useState(getMiniCartState);
+  const { globalState, setMiniCart, setCart } = useGlobalState();
 
   const handlePopup = async (id) => {
     setLoading(true);
     const res = await addToCart(id);
-    console.log("res", res);
-
     if (res.cartLinesAdd.userErrors.length) {
       setLoading(false);
       setErrorMessage(res.cartLinesAdd.userErrors[0].message);
     } else {
       setLoading(false);
       setAdded(true);
-      setCartState(res.cartLinesAdd);
-      setMiniCartState(!cartMiniState);
+      setCart({ ...res.cartLinesAdd.cart });
+      setMiniCart(!globalState.miniCart);
     }
   };
 

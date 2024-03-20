@@ -1,7 +1,7 @@
 import { h, FunctionalComponent } from "preact";
 import cn from "classnames";
 import { useEffect, useState } from "preact/hooks";
-import { setSortState } from "../../state/collection";
+import { setSortState } from "../../store/collection";
 
 interface ISortSelect {
   className?: string;

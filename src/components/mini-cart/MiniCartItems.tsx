@@ -1,64 +1,36 @@
 import { h } from "preact";
 import { getCart } from "../../storefront/graphql/send-request";
 import cn from "classnames";
-
-import {
-  subscribeToCartState,
-  getCartState,
-  setCartState,
-  subscribeToMiniCartState,
-  getMiniCartState,
-  setMiniCartState,
-} from "../../state/cart";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect } from "preact/hooks";
 import { Button } from "../button";
 import { MiniCartItem } from "./MiniCartItem";
+import { useGlobalState } from "../../GlobalStateContext";
 
-export const MiniCart = () => {
-  const [cartState, setLocalCartState] = useState(getCartState);
-  const [cartMiniState, setLocalMiniCartState] = useState(getMiniCartState);
-
-  useEffect(() => {
-    const callback = (newCartState) => {
-      setLocalCartState(newCartState);
-    };
-    subscribeToCartState(callback);
-    return () => {
-      subscribeToCartState(null);
-    };
-  }, []);
-
-  useEffect(() => {
-    const callback = (newCartState) => {
-      setLocalMiniCartState(newCartState);
-    };
-    subscribeToMiniCartState(callback);
-    return () => {
-      subscribeToMiniCartState(null);
-    };
-  }, []);
+export const MiniCartItems = ({ data }) => {
+  const { globalState, setMiniCart, setCart } = useGlobalState();
 
   useEffect(() => {
     getCart().then((res) => {
-      setCartState(res);
+      setCart({ ...res.cart });
     });
   }, []);
 
   const handleMinitCart = () => {
-    setMiniCartState(!cartMiniState);
+    setMiniCart(!globalState.miniCart);
   };
 
-  if (!cartState?.cart) return null;
-  const cartItems = cartState.cart.lines.nodes.map((node) => ({
+  if (!globalState.cart) return null;
+
+  const cartItems = globalState.cart?.lines?.nodes?.map((node) => ({
     lineId: node.id,
     ...node,
     ...node.merchandise,
   }));
   return (
-    <div className="mini-cart">
+    <div className="mini-cart__wrapper">
       <div
         className={cn(
-          { "invisible opacity-0 transition-all": !cartMiniState },
+          { "invisible opacity-0 transition-all": !globalState.miniCart },
           "mini-cart__overlay fixed top-0 left-0 z-10 w-full h-full bg-black-05"
         )}
         onClick={handleMinitCart}
@@ -66,8 +38,8 @@ export const MiniCart = () => {
       <div
         className={cn(
           {
-            "opacity-1 visible translate-x-[0]": cartMiniState,
-            "opacity-0 invisible translate-x-[100%]": !cartMiniState,
+            "opacity-1 visible translate-x-[0]": globalState.miniCart,
+            "opacity-0 invisible translate-x-[100%]": !globalState.miniCart,
           },
           "mini-cart__wrapper max-w-md fixed top-0 right-0 z-10 w-full h-full bg-white shadow-bottom transition-transform"
         )}

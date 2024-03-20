@@ -1,9 +1,6 @@
 import { h, render } from "preact";
-import { MiniCart } from "./MiniCart";
+import { MiniCartItems } from "./MiniCartItems";
 
-export default (element, data) => {
-  const init = () => {
-    render(<MiniCart />, element);
-  };
-  init();
+export const MiniCart = ({ data }) => {
+  return <MiniCartItems data={data} />;
 };
